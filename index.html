@@ -4,15 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Lua — Nutrición & Dietética</title>
-  <meta name="description" content="Lua, Técnico Superior en Dietética especializada en nutrición clínica y deportiva. Planes nutricionales personalizados, sin dietas restrictivas. Primera consulta gratuita, presencial u online." />
+  <meta name="description" content="Lua, Técnico Superior en Dietética especializada en nutrición clínica y deportiva. Planes nutricionales personalizados, sin dietas restrictivas. Primera consulta gratuita. Consultas 100 % online." />
   <meta name="theme-color" content="#3A7D44" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="es_ES" />
   <meta property="og:site_name" content="Lua — Nutrición & Dietética" />
   <meta property="og:title" content="Lua — Nutrición & Dietética" />
-  <meta property="og:description" content="Un plan nutricional hecho para tu cuerpo, tu ritmo y tus metas reales. Primera consulta gratuita, presencial u online." />
+  <meta property="og:description" content="Un plan nutricional hecho para tu cuerpo, tu ritmo y tus metas reales. Primera consulta gratuita, 100 % online." />
   <meta name="twitter:card" content="summary" />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🌿%3C/text%3E%3C/svg%3E" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='2 5 33 33'%3E%3Cpath fill='%233A7D44' d='M15.53 8.22A14 14 0 1 0 31.78 24.47 11.5 11.5 0 0 1 15.53 8.22Z'/%3E%3Cpath fill='%235FAD64' d='M21 19C20 12 25 7 33 7c0 8-5 13-12 12Z'/%3E%3C/svg%3E" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Cormorant+Garamond:wght@500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -61,7 +61,40 @@
       color: var(--verde);
       letter-spacing: .01em;
     }
-    .logo span { font-style: italic; font-weight: 400; }
+    .logo, .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: .7rem;
+      text-decoration: none;
+    }
+    /* Los colores de la hoja llegan al símbolo SVG mediante variables heredadas */
+    .logo-marca {
+      width: 38px; height: 38px;
+      flex-shrink: 0;
+      color: var(--verde);
+      --logo-hoja: var(--verde-claro);
+      --logo-nervio: var(--crema);
+    }
+    .logo-texto { display: flex; flex-direction: column; line-height: 1.1; }
+    .logo-nombre {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.5rem;
+      color: var(--verde);
+    }
+    .logo-lema {
+      font-family: 'Inter', sans-serif;
+      font-size: .6rem;
+      font-weight: 500;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--texto-suave);
+      margin-top: .2rem;
+    }
+    /* Versión clara para el pie de página */
+    .footer-logo .logo-marca { color: var(--blanco); --logo-nervio: var(--texto); }
+    .footer-logo .logo-nombre { color: var(--blanco); }
+    .footer-logo .logo-lema { color: rgba(255,255,255,.55); }
 
     .nav-links { display: flex; gap: 2.4rem; list-style: none; }
     .nav-links a {
@@ -596,6 +629,40 @@
       border-top: 1px solid rgba(255,255,255,.08);
     }
 
+    .footer-logo { margin-bottom: 1rem; }
+    .footer-contacto { margin-top: 1.4rem; }
+    .footer-contacto li { display: flex; gap: .8rem; }
+    .footer-contacto span {
+      min-width: 4.6rem;
+      color: rgba(255,255,255,.35);
+      font-size: .72rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding-top: .12rem;
+    }
+    .footer-contacto li, .footer-contacto a { color: rgba(255,255,255,.75); }
+
+    /* ── ICONOS DE LÍNEA ── */
+    .servicio-icono svg, .exito-icono svg {
+      fill: none;
+      stroke: var(--verde);
+      stroke-width: 1.6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .servicio-icono svg { width: 22px; height: 22px; }
+    .exito-icono svg { width: 56px; height: 56px; stroke-width: 1.3; }
+    .modal-icono .logo-marca { width: 30px; height: 30px; --logo-nervio: var(--verde-suave); }
+
+    /* ── ANIMACIONES AL HACER SCROLL ── */
+    /* Solo se ocultan elementos si el JS ha activado .js-anim, así sin JS todo se ve */
+    .js-anim .revelar {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity .7s ease, transform .7s ease, background .25s;
+    }
+    .js-anim .revelar.visible { opacity: 1; transform: none; }
+
     /* ── TAG GRATUITA ── */
     .tag-gratis {
       display: inline-block;
@@ -964,7 +1031,18 @@
 
 <!-- NAV -->
 <nav id="navbar">
-  <div class="logo"><span>Lua</span> — Nutrición & Dietética</div>
+  <!-- Logotipo: luna creciente ("lua") con una hoja. Se define una vez y se reutiliza con <use> -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="logo-lua" viewBox="2 5 33 33">
+      <path fill="currentColor" d="M15.53 8.22A14 14 0 1 0 31.78 24.47 11.5 11.5 0 0 1 15.53 8.22Z"/>
+      <path style="fill:var(--logo-hoja, #5FAD64)" d="M21 19C20 12 25 7 33 7c0 8-5 13-12 12Z"/>
+      <path style="stroke:var(--logo-nervio, #FAFAF7)" d="M22.5 17.5 30 10" fill="none" stroke-width=".9" stroke-linecap="round"/>
+    </symbol>
+  </svg>
+  <a href="#" class="logo" aria-label="Lua — Nutrición y Dietética, ir al inicio">
+    <svg class="logo-marca" aria-hidden="true"><use href="#logo-lua"/></svg>
+    <span class="logo-texto"><span class="logo-nombre">Lua</span><span class="logo-lema">Nutrición &amp; Dietética</span></span>
+  </a>
   <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-links">
     <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
   </button>
@@ -1032,29 +1110,29 @@
   </div>
   <div class="servicios-grid">
     <div class="servicio-card">
-      <div class="servicio-icono">🌿</div>
+      <div class="servicio-icono"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></div>
       <h3>Consulta inicial <span class="tag-gratis">Gratuita</span></h3>
       <p>Tu primer paso, sin compromiso. Nos conocemos, hablo contigo sobre tus hábitos, objetivos y cómo te sientes. Quiero entenderte antes de proponer nada.</p>
     </div>
     <div class="servicio-card">
-      <div class="servicio-icono">📋</div>
+      <div class="servicio-icono"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2M12 11h4M12 16h4M8 11h.01M8 16h.01"/></svg></div>
       <h3>Plan nutricional</h3>
       <p>Si tras la primera consulta decides continuar, diseño un plan completamente a tu medida: menús reales, adaptados a tu día a día, sin prohibiciones innecesarias.</p>
     </div>
     <div class="servicio-card">
-      <div class="servicio-icono">🔄</div>
+      <div class="servicio-icono"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 7l-8.5 8.5-5-5L2 17M16 7h6v6"/></svg></div>
       <h3>Seguimiento</h3>
       <p>El cambio verdadero necesita acompañamiento. Revisamos juntos cómo evoluciona tu proceso y ajustamos lo que haga falta para que el plan siga funcionando para ti.</p>
     </div>
     <div class="servicio-card">
-      <div class="servicio-icono">🏃</div>
+      <div class="servicio-icono"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 5.5v13M17.5 5.5v13M2.5 9v6M21.5 9v6M6.5 12h11"/></svg></div>
       <h3>Nutrición deportiva</h3>
       <p>Especializada en adaptar la alimentación al entrenamiento. Tanto si empiezas a moverte como si ya compites, la nutrición marca la diferencia en tu rendimiento y recuperación.</p>
     </div>
     <div class="servicio-card">
-      <div class="servicio-icono">💻</div>
+      <div class="servicio-icono"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M22 8l-6 4 6 4V8Z"/></svg></div>
       <h3>Consulta online</h3>
-      <p>Todos los servicios disponibles también en formato videollamada. La misma atención y dedicación, desde donde estés y a la hora que mejor te venga.</p>
+      <p>Todas las consultas son por videollamada. La misma atención y dedicación, desde donde estés y sin desplazamientos.</p>
     </div>
   </div>
 </section>
@@ -1151,7 +1229,7 @@
 <section class="cta-final">
   <div>
     <h2>Tu primera consulta es gratuita. Sin compromiso.</h2>
-    <p>Da el primer paso hacia sentirte mejor. Presencial u online, como prefieras.</p>
+    <p>Da el primer paso hacia sentirte mejor. Por videollamada, desde donde estés.</p>
   </div>
   <a href="#" class="btn-blanco abrir-modal">Reservar ahora</a>
 </section>
@@ -1169,7 +1247,7 @@
 
     <!-- Formulario -->
     <div id="modal-contenido">
-      <div class="modal-icono">🌿</div>
+      <div class="modal-icono"><svg class="logo-marca" aria-hidden="true"><use href="#logo-lua"/></svg></div>
       <h3 id="modal-titulo">Reserva tu consulta gratuita</h3>
       <p class="modal-subtitulo">Sin compromiso. Cuéntame un poco sobre ti y me pongo en contacto contigo para encontrar el mejor momento.</p>
 
@@ -1231,7 +1309,7 @@
 
     <!-- Pantalla de éxito -->
     <div class="modal-exito" id="modal-exito">
-      <div class="exito-icono">✅</div>
+      <div class="exito-icono"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 12.5l2.7 2.7L16 9.5"/></svg></div>
       <h4>¡Solicitud recibida!</h4>
       <p>Gracias, <strong id="exito-nombre"></strong>. Me pondré en contacto contigo en las próximas 24 horas para confirmar tu cita.</p>
     </div>
@@ -1241,8 +1319,16 @@
 <!-- FOOTER -->
 <footer>
   <div>
-    <div class="footer-logo">Lua — Nutrición & Dietética</div>
-    <p>Técnico superior en dietética especializada en nutrición clínica y deportiva. Consultas presenciales y online.</p>
+    <div class="footer-logo">
+      <svg class="logo-marca" aria-hidden="true"><use href="#logo-lua"/></svg>
+      <span class="logo-texto"><span class="logo-nombre">Lua</span><span class="logo-lema">Nutrición &amp; Dietética</span></span>
+    </div>
+    <p>Técnico superior en dietética especializada en nutrición clínica y deportiva. Consultas online.</p>
+    <ul class="footer-contacto">
+      <li><span>Teléfono</span><a href="tel:+34665067197">+34 665 06 71 97</a></li>
+      <li><span>Correo</span><a href="mailto:lua.tomas.nutri@gmail.com">lua.tomas.nutri@gmail.com</a></li>
+      <li><span>Horario</span>De 9:30 a 14:00</li>
+    </ul>
   </div>
   <div>
     <h4>Servicios</h4>
@@ -1330,6 +1416,28 @@
   window.addEventListener('scroll', () => {
     navbar.classList.toggle('scrolled', window.scrollY > 20);
   });
+
+  // Animaciones al hacer scroll: cada bloque aparece la primera vez que entra en pantalla
+  const animables = document.querySelectorAll('.section-header, .servicio-card, .sobre-texto, .paso, .resena-form-wrap, .cta-final > div');
+  if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.documentElement.classList.add('js-anim');
+    const observador = new IntersectionObserver(entradas => {
+      entradas.forEach(entrada => {
+        if (!entrada.isIntersecting) return;
+        entrada.target.classList.add('visible');
+        observador.unobserve(entrada.target);
+      });
+    }, { threshold: 0.12 });
+    animables.forEach(el => {
+      el.classList.add('revelar');
+      // Las tarjetas de una misma fila entran escalonadas (el retardo no afecta al hover)
+      if (el.matches('.servicio-card, .paso')) {
+        const retardo = ([...el.parentElement.children].indexOf(el) % 4) * 90;
+        el.style.transitionDelay = `${retardo}ms, ${retardo}ms, 0s`;
+      }
+      observador.observe(el);
+    });
+  }
 
   // Menú móvil
   const navToggle = document.getElementById('nav-toggle');
