@@ -1,0 +1,1688 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lua — Nutrición & Dietética</title>
+  <meta name="description" content="Lua, Técnico Superior en Dietética especializada en nutrición clínica y deportiva. Planes nutricionales personalizados, sin dietas restrictivas. Primera consulta gratuita, presencial u online." />
+  <meta name="theme-color" content="#3A7D44" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="es_ES" />
+  <meta property="og:site_name" content="Lua — Nutrición & Dietética" />
+  <meta property="og:title" content="Lua — Nutrición & Dietética" />
+  <meta property="og:description" content="Un plan nutricional hecho para tu cuerpo, tu ritmo y tus metas reales. Primera consulta gratuita, presencial u online." />
+  <meta name="twitter:card" content="summary" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🌿%3C/text%3E%3C/svg%3E" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --verde:        #3A7D44;
+      --verde-claro:  #5FAD64;
+      --verde-suave:  #D6EAD8;
+      --beige:        #F5EFE0;
+      --beige-oscuro: #EDE4CF;
+      --crema:        #FAFAF7;
+      --texto:        #2C2C2C;
+      --texto-suave:  #6B6B6B;
+      --blanco:       #FFFFFF;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--texto);
+      background: var(--crema);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 5%;
+      background: rgba(250,250,247,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--beige-oscuro);
+      transition: box-shadow .3s;
+    }
+    nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,.06); }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      color: var(--verde);
+      letter-spacing: .01em;
+    }
+    .logo span { font-style: italic; font-weight: 400; }
+
+    .nav-links { display: flex; gap: 2.4rem; list-style: none; }
+    .nav-links a {
+      text-decoration: none;
+      font-size: .88rem;
+      font-weight: 500;
+      color: var(--texto-suave);
+      letter-spacing: .03em;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--verde); }
+
+    .nav-cta {
+      background: var(--verde);
+      color: var(--blanco) !important;
+      padding: .5rem 1.2rem;
+      border-radius: 2px;
+      transition: background .2s !important;
+    }
+    .nav-cta:hover { background: var(--verde-claro) !important; color: var(--blanco) !important; }
+
+    .nav-wa {
+      display: flex;
+      align-items: center;
+      gap: .45rem;
+      background: #25D366;
+      color: var(--blanco) !important;
+      padding: .5rem 1.1rem;
+      border-radius: 2px;
+      font-size: .88rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background .2s;
+    }
+    .nav-wa:hover { background: #1ebe5a !important; color: var(--blanco) !important; }
+    .nav-wa svg { flex-shrink: 0; }
+
+    /* Botón de menú (solo móvil) */
+    .nav-toggle {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      padding: .4rem;
+      color: var(--verde);
+      cursor: pointer;
+    }
+
+    /* Botón WhatsApp flotante */
+    .wa-flotante {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 150;
+      background: #25D366;
+      color: var(--blanco);
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,.4);
+      text-decoration: none;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .wa-flotante:hover {
+      transform: scale(1.08);
+      box-shadow: 0 6px 28px rgba(37,211,102,.55);
+    }
+    .wa-tooltip {
+      position: absolute;
+      right: 68px;
+      background: var(--texto);
+      color: var(--blanco);
+      font-size: .78rem;
+      white-space: nowrap;
+      padding: .4rem .8rem;
+      border-radius: 2px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s;
+    }
+    .wa-flotante:hover .wa-tooltip { opacity: 1; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding-top: 72px;
+    }
+
+    .hero-texto {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 6rem 5% 6rem 8%;
+    }
+
+    .eyebrow {
+      font-size: .8rem;
+      font-weight: 500;
+      color: var(--verde);
+      letter-spacing: .12em;
+      margin-bottom: 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: .7rem;
+    }
+    .eyebrow::before {
+      content: '';
+      display: block;
+      width: 2rem;
+      height: 1px;
+      background: var(--verde);
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 4vw, 3.6rem);
+      line-height: 1.18;
+      font-weight: 600;
+      color: var(--texto);
+      margin-bottom: 1.6rem;
+      max-width: 18ch;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--verde);
+    }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: var(--texto-suave);
+      max-width: 42ch;
+      line-height: 1.75;
+      margin-bottom: 2.8rem;
+    }
+
+    .btn-group { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .btn-primary {
+      background: var(--verde);
+      color: var(--blanco);
+      padding: .85rem 2rem;
+      border: none;
+      border-radius: 2px;
+      font-family: 'Inter', sans-serif;
+      font-size: .9rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background .2s, transform .15s;
+    }
+    .btn-primary:hover { background: var(--verde-claro); transform: translateY(-1px); }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--verde);
+      padding: .85rem 2rem;
+      border: 1.5px solid var(--verde);
+      border-radius: 2px;
+      font-family: 'Inter', sans-serif;
+      font-size: .9rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background .2s, color .2s;
+    }
+    .btn-secondary:hover { background: var(--verde-suave); }
+
+    .hero-imagen {
+      background: var(--verde-suave);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-ilustracion {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Ilustración SVG decorativa */
+    .hero-ilustracion svg {
+      width: 72%;
+      max-width: 420px;
+      opacity: .92;
+    }
+
+    .hero-badge {
+      position: absolute;
+      bottom: 2.5rem;
+      left: -1rem;
+      background: var(--blanco);
+      border-left: 3px solid var(--verde);
+      padding: 1rem 1.4rem;
+      box-shadow: 0 8px 30px rgba(0,0,0,.09);
+      max-width: 220px;
+    }
+    .hero-badge p { font-size: .78rem; color: var(--texto-suave); margin-bottom: .2rem; }
+    .hero-badge strong { font-size: 1.1rem; color: var(--verde); font-weight: 600; }
+
+    /* ── STATS ── */
+    .stats {
+      background: var(--verde);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .stat-item {
+      padding: 2.5rem 2rem;
+      text-align: center;
+      border-right: 1px solid rgba(255,255,255,.15);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      color: var(--blanco);
+      display: block;
+      line-height: 1;
+      margin-bottom: .4rem;
+    }
+    .stat-label { font-size: .82rem; color: rgba(255,255,255,.7); font-weight: 300; letter-spacing: .05em; }
+
+    /* ── SERVICIOS ── */
+    .servicios {
+      background: var(--beige);
+      padding: 7rem 8%;
+    }
+
+    .section-header {
+      margin-bottom: 4rem;
+    }
+    .section-header .eyebrow { margin-bottom: 1rem; }
+    .section-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.9rem, 3vw, 2.8rem);
+      font-weight: 600;
+      line-height: 1.2;
+      max-width: 22ch;
+    }
+
+    .servicios-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: var(--beige-oscuro);
+    }
+
+    .servicio-card {
+      background: var(--beige);
+      padding: 2.8rem 2.2rem;
+      transition: background .25s;
+      cursor: default;
+    }
+    .servicio-card:hover { background: var(--blanco); }
+
+    .servicio-icono {
+      width: 48px;
+      height: 48px;
+      background: var(--verde-suave);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      font-size: 1.3rem;
+    }
+
+    .servicio-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: .8rem;
+    }
+    .servicio-card p { font-size: .9rem; color: var(--texto-suave); line-height: 1.7; }
+
+    /* ── SOBRE MÍ ── */
+    .sobre {
+      background: var(--crema);
+      padding: 7rem 8%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+
+    .sobre-img-wrap {
+      position: relative;
+    }
+
+    .sobre-foto {
+      width: 100%;
+      aspect-ratio: 4/5;
+      background: var(--beige-oscuro);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .sobre-foto svg {
+      width: 65%;
+      opacity: .6;
+    }
+
+    .sobre-deco {
+      position: absolute;
+      bottom: -1.5rem;
+      right: -1.5rem;
+      width: 60%;
+      aspect-ratio: 1;
+      background: var(--verde-suave);
+      z-index: -1;
+    }
+
+    .sobre-texto h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.7rem, 2.5vw, 2.4rem);
+      font-weight: 600;
+      line-height: 1.25;
+      margin-bottom: 1.4rem;
+    }
+    .sobre-texto p {
+      font-size: .95rem;
+      color: var(--texto-suave);
+      line-height: 1.8;
+      margin-bottom: 1rem;
+      max-width: 46ch;
+    }
+
+    .credenciales {
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: .7rem;
+    }
+    .credencial {
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+      font-size: .88rem;
+      color: var(--texto-suave);
+    }
+    .credencial::before {
+      content: '';
+      display: block;
+      width: 8px;
+      height: 8px;
+      background: var(--verde);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ── PROCESO ── */
+    .proceso {
+      background: var(--beige);
+      padding: 7rem 8%;
+    }
+
+    .proceso-pasos {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      margin-top: 4rem;
+      position: relative;
+    }
+    .proceso-pasos::before {
+      content: '';
+      position: absolute;
+      top: 1.5rem;
+      left: 2rem;
+      right: 2rem;
+      height: 1px;
+      background: var(--verde-suave);
+    }
+
+    .paso {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .paso-num {
+      width: 3rem;
+      height: 3rem;
+      background: var(--crema);
+      border: 1.5px solid var(--verde);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      color: var(--verde);
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+    .paso h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: .6rem;
+    }
+    .paso p { font-size: .87rem; color: var(--texto-suave); line-height: 1.7; }
+
+    /* ── TESTIMONIOS ── */
+    .testimonios {
+      background: var(--crema);
+      padding: 7rem 8%;
+    }
+
+    .testi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 4rem;
+    }
+
+    .testi-card {
+      background: var(--beige);
+      padding: 2.4rem;
+      position: relative;
+    }
+    .testi-card::before {
+      content: '"';
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem;
+      color: var(--verde-suave);
+      position: absolute;
+      top: .5rem;
+      left: 1.8rem;
+      line-height: 1;
+    }
+
+    .testi-texto {
+      font-size: .92rem;
+      color: var(--texto-suave);
+      line-height: 1.75;
+      margin-bottom: 1.6rem;
+      margin-top: 1.5rem;
+    }
+    .testi-autora {
+      font-size: .83rem;
+      font-weight: 500;
+      color: var(--verde);
+    }
+    .testi-detalle { font-size: .78rem; color: var(--texto-suave); font-weight: 300; }
+
+    /* ── CTA FINAL ── */
+    .cta-final {
+      background: var(--verde);
+      padding: 6rem 8%;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 4rem;
+    }
+    .cta-final h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      color: var(--blanco);
+      font-weight: 600;
+      line-height: 1.2;
+      max-width: 24ch;
+    }
+    .cta-final p { color: rgba(255,255,255,.7); margin-top: .8rem; font-size: .95rem; font-weight: 300; }
+    .btn-blanco {
+      background: var(--blanco);
+      color: var(--verde);
+      padding: 1rem 2.2rem;
+      border: none;
+      border-radius: 2px;
+      font-family: 'Inter', sans-serif;
+      font-size: .9rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      text-decoration: none;
+      transition: opacity .2s;
+      display: inline-block;
+    }
+    .btn-blanco:hover { opacity: .9; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--texto);
+      color: rgba(255,255,255,.5);
+      padding: 3rem 8%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      font-size: .83rem;
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      color: var(--blanco);
+      margin-bottom: .6rem;
+    }
+    footer h4 { color: var(--blanco); font-size: .83rem; margin-bottom: 1rem; font-weight: 500; letter-spacing: .06em; }
+    footer ul { list-style: none; }
+    footer ul li { margin-bottom: .5rem; }
+    footer a { color: rgba(255,255,255,.5); text-decoration: none; transition: color .2s; }
+    footer a:hover { color: var(--blanco); }
+    .footer-bottom {
+      background: var(--texto);
+      text-align: center;
+      padding: 1.2rem 8%;
+      font-size: .78rem;
+      color: rgba(255,255,255,.3);
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+
+    /* ── TAG GRATUITA ── */
+    .tag-gratis {
+      display: inline-block;
+      background: var(--verde);
+      color: var(--blanco);
+      font-size: .65rem;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      padding: .15rem .5rem;
+      border-radius: 2px;
+      vertical-align: middle;
+      margin-left: .5rem;
+      letter-spacing: .04em;
+    }
+
+    /* Grid de 5 servicios simétrico: 3 arriba, 2 centradas abajo */
+    .servicios-grid {
+      display: grid !important;
+      grid-template-columns: repeat(6, 1fr) !important;
+      gap: 0 !important;
+      background: transparent !important;
+    }
+    .servicio-card {
+      grid-column: span 2;
+      border: 1px solid var(--beige-oscuro);
+      margin: -1px 0 0 -1px;
+    }
+    .servicio-card:nth-child(4) { grid-column: 2 / span 2; }
+    .servicio-card:nth-child(5) { grid-column: 4 / span 2; }
+
+    /* ── RESEÑAS ── */
+    .resena-vacia {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 3rem 2rem;
+      color: var(--texto-suave);
+      font-size: .9rem;
+      background: var(--beige);
+      border: 1.5px dashed var(--beige-oscuro);
+    }
+
+    .resena-form-wrap {
+      margin-top: 4rem;
+      border-top: 1px solid var(--beige-oscuro);
+      padding-top: 3rem;
+    }
+    .resena-form-wrap h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+    .resena-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 640px;
+    }
+    .form-row {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    .resena-form input[type="text"],
+    .resena-form textarea {
+      font-family: 'Inter', sans-serif;
+      font-size: .9rem;
+      color: var(--texto);
+      border: 1.5px solid var(--beige-oscuro);
+      background: var(--blanco);
+      padding: .75rem 1rem;
+      outline: none;
+      border-radius: 2px;
+      transition: border-color .2s;
+      width: 100%;
+      resize: vertical;
+    }
+    .resena-form input:focus,
+    .resena-form textarea:focus { border-color: var(--verde); }
+
+    .estrellas-selector {
+      display: flex;
+      gap: .2rem;
+      font-size: 1.6rem;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .estrellas-selector span { color: var(--beige-oscuro); transition: color .15s; }
+    .estrellas-selector span.activa { color: #e8a818; }
+    .estrellas-selector span:focus-visible { outline: 2px solid var(--verde); outline-offset: 2px; }
+
+    /* Campo trampa anti-spam: invisible para personas, los bots lo rellenan */
+    .campo-trampa {
+      position: absolute;
+      left: -9999px;
+      width: 1px; height: 1px;
+      overflow: hidden;
+    }
+
+    .form-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .char-count { font-size: .78rem; color: var(--texto-suave); }
+    .form-aviso { font-size: .82rem; color: var(--verde); min-height: 1.2em; }
+
+    /* Cards de reseña publicadas */
+    .testi-card .estrellas-pub {
+      font-size: 1rem;
+      color: #e8a818;
+      margin-bottom: .6rem;
+      letter-spacing: .05em;
+    }
+    .testi-card .testi-fecha {
+      font-size: .75rem;
+      color: var(--texto-suave);
+      font-weight: 300;
+      margin-top: .3rem;
+    }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(44,44,44,.55);
+      backdrop-filter: blur(4px);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    .modal-overlay.activo { display: flex; }
+
+    .modal {
+      background: var(--crema);
+      width: 100%;
+      max-width: 520px;
+      padding: 3rem 2.8rem 2.4rem;
+      position: relative;
+      animation: modalEntrar .25s ease;
+      max-height: 90vh;
+      overflow-y: auto;
+      outline: none;
+    }
+    @keyframes modalEntrar {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .modal-cerrar {
+      position: absolute;
+      top: 1.2rem; right: 1.4rem;
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      cursor: pointer;
+      color: var(--texto-suave);
+      line-height: 1;
+      transition: color .2s;
+    }
+    .modal-cerrar:hover { color: var(--texto); }
+
+    .modal-icono {
+      width: 52px; height: 52px;
+      background: var(--verde-suave);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 1.4rem;
+    }
+    .modal h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      margin-bottom: .5rem;
+    }
+    .modal .modal-subtitulo {
+      font-size: .88rem;
+      color: var(--texto-suave);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    .modal-form { display: flex; flex-direction: column; gap: 1.1rem; }
+
+    .campo-grupo { display: flex; flex-direction: column; gap: .35rem; }
+    .campo-grupo label {
+      font-size: .78rem;
+      font-weight: 500;
+      color: var(--texto);
+      letter-spacing: .04em;
+    }
+    .campo-grupo label .obligatorio { color: var(--verde); margin-left: .2rem; }
+    .campo-grupo label .opcional {
+      font-size: .72rem;
+      color: var(--texto-suave);
+      font-weight: 300;
+      margin-left: .3rem;
+    }
+
+    .modal-form input,
+    .modal-form select,
+    .modal-form textarea {
+      font-family: 'Inter', sans-serif;
+      font-size: .92rem;
+      color: var(--texto);
+      border: 1.5px solid var(--beige-oscuro);
+      background: var(--blanco);
+      padding: .75rem 1rem;
+      outline: none;
+      border-radius: 2px;
+      transition: border-color .2s;
+      width: 100%;
+    }
+    .modal-form input:focus,
+    .modal-form select:focus,
+    .modal-form textarea:focus { border-color: var(--verde); }
+    .modal-form input.error,
+    .modal-form select.error { border-color: #c0392b; }
+
+    .modal-form textarea { resize: vertical; }
+    .modal-btn:disabled { opacity: .6; cursor: wait; }
+    .modal-form select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B6B6B' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; padding-right: 2.5rem; }
+
+    .modal-separador {
+      font-size: .75rem;
+      color: var(--texto-suave);
+      letter-spacing: .08em;
+      margin: .4rem 0 -.1rem;
+      font-weight: 500;
+    }
+
+    .modal-error-msg {
+      font-size: .82rem;
+      color: #c0392b;
+      min-height: 1.1em;
+    }
+
+    .modal-btn {
+      background: var(--verde);
+      color: var(--blanco);
+      border: none;
+      padding: .95rem;
+      font-family: 'Inter', sans-serif;
+      font-size: .95rem;
+      font-weight: 500;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: background .2s;
+      margin-top: .4rem;
+    }
+    .modal-btn:hover { background: var(--verde-claro); }
+
+    .modal-exito {
+      text-align: center;
+      padding: 2rem 0 1rem;
+      display: none;
+    }
+    .modal-exito .exito-icono { font-size: 3rem; margin-bottom: 1rem; }
+    .modal-exito h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      margin-bottom: .6rem;
+    }
+    .modal-exito p { font-size: .9rem; color: var(--texto-suave); line-height: 1.7; }
+
+    /* ── CHECKBOX PRIVACIDAD ── */
+    .check-label {
+      display: flex;
+      align-items: flex-start;
+      gap: .6rem;
+      font-size: .84rem;
+      color: var(--texto-suave);
+      cursor: pointer;
+      line-height: 1.5;
+    }
+    .check-label input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      margin-top: .15rem;
+      accent-color: var(--verde);
+      cursor: pointer;
+    }
+    .check-label.error-check { color: #c0392b; }
+    .link-privacidad { color: var(--verde); text-decoration: underline; cursor: pointer; }
+
+    /* ── MODAL POLÍTICA DE PRIVACIDAD ── */
+    .modal-privacidad {
+      background: var(--crema);
+      width: 100%;
+      max-width: 680px;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 3rem 2.8rem;
+      position: relative;
+      animation: modalEntrar .25s ease;
+    }
+    .modal-privacidad h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      margin-bottom: .4rem;
+    }
+    .modal-privacidad .priv-fecha {
+      font-size: .78rem;
+      color: var(--texto-suave);
+      margin-bottom: 2rem;
+      display: block;
+    }
+    .modal-privacidad h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin: 1.8rem 0 .5rem;
+      color: var(--verde);
+    }
+    .modal-privacidad p, .modal-privacidad li {
+      font-size: .88rem;
+      color: var(--texto-suave);
+      line-height: 1.8;
+    }
+    .modal-privacidad ul { padding-left: 1.2rem; margin-top: .4rem; }
+    .modal-privacidad ul li { margin-bottom: .3rem; }
+    .modal-privacidad a { color: var(--verde); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-imagen { min-height: 40vh; }
+      .hero-texto { padding: 4rem 5%; }
+      .stats { grid-template-columns: 1fr; }
+      .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,.15); }
+      .servicios-grid { grid-template-columns: 1fr !important; }
+      .servicio-card,
+      .servicio-card:nth-child(4),
+      .servicio-card:nth-child(5) { grid-column: auto; }
+      .sobre { grid-template-columns: 1fr; gap: 3rem; }
+      .proceso-pasos { grid-template-columns: 1fr 1fr; }
+      .proceso-pasos::before { display: none; }
+      .testi-grid { grid-template-columns: 1fr; }
+      .cta-final { grid-template-columns: 1fr; gap: 2rem; }
+      footer { grid-template-columns: 1fr; }
+      .nav-toggle { display: flex; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%; left: 0; right: 0;
+        flex-direction: column;
+        gap: 1.1rem;
+        padding: 1.4rem 5% 1.6rem;
+        background: var(--crema);
+        border-bottom: 1px solid var(--beige-oscuro);
+        box-shadow: 0 12px 24px rgba(0,0,0,.08);
+      }
+      .nav-links.abierto { display: flex; }
+      .nav-links a { font-size: 1rem; }
+      .nav-cta, .nav-wa { display: flex; justify-content: center; padding: .8rem 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="logo"><span>Lua</span> — Nutrición & Dietética</div>
+  <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-links">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#sobre">Sobre mí</a></li>
+    <li><a href="#proceso">Proceso</a></li>
+    <li><a href="#" class="nav-cta abrir-modal">Reservar consulta gratuita</a></li>
+    <li>
+      <a href="https://wa.me/34665067197?text=Hola%20Lua%2C%20me%20gustar%C3%ADa%20obtener%20m%C3%A1s%20informaci%C3%B3n%20sobre%20tus%20servicios%20de%20nutrici%C3%B3n." target="_blank" class="nav-wa">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        WhatsApp
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-texto">
+    <p class="eyebrow">Técnico superior en dietética</p>
+    <h1>Comer bien es <em>conocerte</em> a ti misma</h1>
+    <p class="hero-desc">No dietas, no restricciones. Un plan nutricional hecho para tu cuerpo, tu ritmo y tus metas reales.</p>
+    <div class="btn-group">
+      <a href="#" class="btn-primary abrir-modal">Reservar consulta</a>
+      <a href="#sobre" class="btn-secondary">Conocer más</a>
+    </div>
+  </div>
+  <div class="hero-imagen">
+    <div class="hero-ilustracion">
+      <!-- Ilustración decorativa: plato con vegetales -->
+      <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="200" cy="200" r="160" fill="#C5DFC8" opacity=".4"/>
+        <circle cx="200" cy="200" r="130" fill="#D6EAD8"/>
+        <!-- Plato -->
+        <circle cx="200" cy="210" r="95" fill="white" opacity=".75"/>
+        <!-- Vegetales decorativos -->
+        <ellipse cx="178" cy="195" rx="28" ry="18" fill="#5FAD64" opacity=".8"/>
+        <ellipse cx="218" cy="192" rx="22" ry="14" fill="#3A7D44" opacity=".7"/>
+        <circle cx="195" cy="225" r="18" fill="#F5EFE0"/>
+        <circle cx="215" cy="220" r="14" fill="#EDE4CF"/>
+        <ellipse cx="195" cy="180" rx="15" ry="22" fill="#7CBF82" opacity=".6"/>
+        <!-- Hoja decorativa izq -->
+        <path d="M100 130 Q80 100 110 90 Q120 120 100 130Z" fill="#3A7D44" opacity=".4"/>
+        <path d="M110 135 Q95 108 110 90" stroke="#3A7D44" stroke-width="1.5" opacity=".5"/>
+        <!-- Hoja dcha -->
+        <path d="M305 140 Q330 115 310 100 Q295 128 305 140Z" fill="#5FAD64" opacity=".4"/>
+        <path d="M305 140 Q318 115 310 100" stroke="#5FAD64" stroke-width="1.5" opacity=".5"/>
+        <!-- tenedor sutil -->
+        <rect x="310" y="200" width="3" height="60" rx="1.5" fill="#3A7D44" opacity=".3"/>
+        <rect x="303" y="200" width="2" height="25" rx="1" fill="#3A7D44" opacity=".3"/>
+        <rect x="316" y="200" width="2" height="25" rx="1" fill="#3A7D44" opacity=".3"/>
+      </svg>
+    </div>
+
+  </div>
+</section>
+
+
+
+<!-- SERVICIOS -->
+<section class="servicios" id="servicios">
+  <div class="section-header">
+    <p class="eyebrow">Lo que ofrezco</p>
+    <h2>Servicios diseñados para tu bienestar real</h2>
+  </div>
+  <div class="servicios-grid">
+    <div class="servicio-card">
+      <div class="servicio-icono">🌿</div>
+      <h3>Consulta inicial <span class="tag-gratis">Gratuita</span></h3>
+      <p>Tu primer paso, sin compromiso. Nos conocemos, hablo contigo sobre tus hábitos, objetivos y cómo te sientes. Quiero entenderte antes de proponer nada.</p>
+    </div>
+    <div class="servicio-card">
+      <div class="servicio-icono">📋</div>
+      <h3>Plan nutricional</h3>
+      <p>Si tras la primera consulta decides continuar, diseño un plan completamente a tu medida: menús reales, adaptados a tu día a día, sin prohibiciones innecesarias.</p>
+    </div>
+    <div class="servicio-card">
+      <div class="servicio-icono">🔄</div>
+      <h3>Seguimiento</h3>
+      <p>El cambio verdadero necesita acompañamiento. Revisamos juntos cómo evoluciona tu proceso y ajustamos lo que haga falta para que el plan siga funcionando para ti.</p>
+    </div>
+    <div class="servicio-card">
+      <div class="servicio-icono">🏃</div>
+      <h3>Nutrición deportiva</h3>
+      <p>Especializada en adaptar la alimentación al entrenamiento. Tanto si empiezas a moverte como si ya compites, la nutrición marca la diferencia en tu rendimiento y recuperación.</p>
+    </div>
+    <div class="servicio-card">
+      <div class="servicio-icono">💻</div>
+      <h3>Consulta online</h3>
+      <p>Todos los servicios disponibles también en formato videollamada. La misma atención y dedicación, desde donde estés y a la hora que mejor te venga.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE MÍ -->
+<section class="sobre" id="sobre">
+  <div class="sobre-img-wrap">
+    <div class="sobre-foto">
+      <!-- Placeholder ilustración persona -->
+      <svg viewBox="0 0 200 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="70" r="42" fill="#C5DFC8"/>
+        <path d="M30 220 Q30 150 100 150 Q170 150 170 220" fill="#D6EAD8"/>
+        <circle cx="100" cy="68" r="36" fill="#EDE4CF"/>
+      </svg>
+    </div>
+    <div class="sobre-deco"></div>
+  </div>
+  <div class="sobre-texto">
+    <p class="eyebrow">Sobre mí</p>
+    <h2>Hola, soy Lua. Y esto va de mucho más que comer bien.</h2>
+    <p>Soy Técnico Superior en Dietética, especializada en nutrición clínica y deportiva. Elegí esta profesión porque creo, de verdad, que lo que ponemos en el plato tiene el poder de transformar cómo nos sentimos por dentro y por fuera.</p>
+    <p>Mi manera de trabajar es cercana y sin juicios. No creo en las dietas estrictas ni en las listas de alimentos prohibidos. Creo en escucharte, en entender tu vida y en construir contigo un camino que tenga sentido para ti, y que puedas mantener en el tiempo.</p>
+    <p>Porque cuidarte bien no debería ser un esfuerzo. Debería hacerte sentir mejor con tu salud, con tu cuerpo y con tu mente.</p>
+    <div class="credenciales">
+      <div class="credencial">Técnico Superior en Dietética</div>
+      <div class="credencial">Especializada en nutrición clínica</div>
+      <div class="credencial">Especializada en nutrición deportiva</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESO -->
+<section class="proceso" id="proceso">
+  <div class="section-header">
+    <p class="eyebrow">Cómo trabajamos</p>
+    <h2>Un proceso claro, sin sorpresas</h2>
+  </div>
+  <div class="proceso-pasos">
+    <div class="paso">
+      <div class="paso-num">1</div>
+      <h4>Primera consulta</h4>
+      <p>Hablamos de ti: hábitos, historial médico, rutinas y lo que quieres lograr. Sin juicios.</p>
+    </div>
+    <div class="paso">
+      <div class="paso-num">2</div>
+      <h4>Diseño del plan</h4>
+      <p>En 48 horas recibes tu plan personalizado: menús, recetas y estrategias prácticas.</p>
+    </div>
+    <div class="paso">
+      <div class="paso-num">3</div>
+      <h4>Puesta en marcha</h4>
+      <p>Comienzas con soporte por mensaje en los primeros 7 días para resolver cualquier duda.</p>
+    </div>
+    <div class="paso">
+      <div class="paso-num">4</div>
+      <h4>Seguimiento</h4>
+      <p>Revisamos juntos avances cada mes y ajustamos lo que haga falta para mantener el rumbo.</p>
+    </div>
+  </div>
+</section>
+
+<!-- RESEÑAS -->
+<section class="testimonios" id="resenas">
+  <div class="section-header">
+    <p class="eyebrow">Reseñas</p>
+    <h2>Lo que opinan quienes han pasado por aquí</h2>
+  </div>
+
+  <div class="testi-grid" id="resenas-grid">
+    <!-- Las reseñas se cargan aquí desde JS -->
+    <div class="resena-vacia">
+      <p>Todavía no hay reseñas. ¡Sé el primero en compartir tu experiencia!</p>
+    </div>
+  </div>
+
+  <!-- Formulario para dejar reseña -->
+  <div class="resena-form-wrap">
+    <h3>Deja tu reseña</h3>
+    <div class="resena-form">
+      <div class="form-row">
+        <input type="text" id="resena-nombre" placeholder="Tu nombre" aria-label="Tu nombre" maxlength="60" />
+        <div class="estrellas-selector" id="estrellas-selector" role="radiogroup" aria-label="Valoración">
+          <span data-val="1" role="radio" aria-checked="false" aria-label="1 estrella" tabindex="0">★</span>
+          <span data-val="2" role="radio" aria-checked="false" aria-label="2 estrellas" tabindex="-1">★</span>
+          <span data-val="3" role="radio" aria-checked="false" aria-label="3 estrellas" tabindex="-1">★</span>
+          <span data-val="4" role="radio" aria-checked="false" aria-label="4 estrellas" tabindex="-1">★</span>
+          <span data-val="5" role="radio" aria-checked="false" aria-label="5 estrellas" tabindex="-1">★</span>
+        </div>
+      </div>
+      <textarea id="resena-texto" placeholder="Cuéntanos tu experiencia..." aria-label="Tu reseña" maxlength="400" rows="4"></textarea>
+      <div class="campo-trampa" aria-hidden="true">
+        <label for="resena-web">No rellenes este campo</label>
+        <input type="text" id="resena-web" tabindex="-1" autocomplete="off" />
+      </div>
+      <div class="form-footer">
+        <span class="char-count" id="char-count">0 / 400</span>
+        <button class="btn-primary" id="btn-enviar">Publicar reseña</button>
+      </div>
+      <p class="form-aviso" id="form-aviso" role="status"></p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final">
+  <div>
+    <h2>Tu primera consulta es gratuita. Sin compromiso.</h2>
+    <p>Da el primer paso hacia sentirte mejor. Presencial u online, como prefieras.</p>
+  </div>
+  <a href="#" class="btn-blanco abrir-modal">Reservar ahora</a>
+</section>
+
+<!-- BOTÓN FLOTANTE WHATSAPP -->
+<a href="https://wa.me/34665067197?text=Hola%20Lua%2C%20me%20gustar%C3%ADa%20obtener%20m%C3%A1s%20informaci%C3%B3n%20sobre%20tus%20servicios%20de%20nutrici%C3%B3n." target="_blank" class="wa-flotante" aria-label="Contactar por WhatsApp">
+  <span class="wa-tooltip">Escríbeme por WhatsApp</span>
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+</a>
+
+<!-- MODAL RESERVA -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-titulo" tabindex="-1">
+    <button class="modal-cerrar" id="modal-cerrar" aria-label="Cerrar">✕</button>
+
+    <!-- Formulario -->
+    <div id="modal-contenido">
+      <div class="modal-icono">🌿</div>
+      <h3 id="modal-titulo">Reserva tu consulta gratuita</h3>
+      <p class="modal-subtitulo">Sin compromiso. Cuéntame un poco sobre ti y me pongo en contacto contigo para encontrar el mejor momento.</p>
+
+      <div class="modal-form">
+        <p class="modal-separador">DATOS OBLIGATORIOS</p>
+
+        <div class="campo-grupo">
+          <label for="m-nombre">Nombre <span class="obligatorio">*</span></label>
+          <input type="text" id="m-nombre" placeholder="Tu nombre" maxlength="60" />
+        </div>
+        <div class="campo-grupo">
+          <label for="m-apellidos">Apellidos <span class="obligatorio">*</span></label>
+          <input type="text" id="m-apellidos" placeholder="Tus apellidos" maxlength="80" />
+        </div>
+        <div class="campo-grupo">
+          <label for="m-telefono">Teléfono <span class="obligatorio">*</span></label>
+          <input type="tel" id="m-telefono" placeholder="Ej. 600 000 000" maxlength="20" />
+        </div>
+        <div class="campo-grupo">
+          <label for="m-email">Correo electrónico <span class="obligatorio">*</span></label>
+          <input type="email" id="m-email" placeholder="tucorreo@email.com" maxlength="100" />
+        </div>
+        <div class="campo-trampa" aria-hidden="true">
+          <label for="m-web">No rellenes este campo</label>
+          <input type="text" id="m-web" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <p class="modal-separador" style="margin-top:.6rem;">DATOS OPCIONALES</p>
+
+        <div class="campo-grupo">
+          <label for="m-objetivo">¿Cuál es tu objetivo principal? <span class="opcional">(opcional)</span></label>
+          <select id="m-objetivo">
+            <option value="">Selecciona una opción</option>
+            <option value="perder_peso">Perder peso de forma saludable</option>
+            <option value="ganar_masa">Ganar masa muscular</option>
+            <option value="mejorar_habitos">Mejorar mis hábitos alimenticios</option>
+            <option value="rendimiento">Mejorar mi rendimiento deportivo</option>
+            <option value="salud">Control de una condición de salud</option>
+            <option value="otro">Otro</option>
+          </select>
+        </div>
+        <div class="campo-grupo">
+          <label for="m-mensaje">¿Algo más que quieras contarme? <span class="opcional">(opcional)</span></label>
+          <textarea id="m-mensaje" placeholder="Cuéntame lo que quieras que sepa antes de llamarte..." maxlength="300" rows="3"></textarea>
+        </div>
+
+        <p class="modal-error-msg" id="modal-error" role="alert"></p>
+
+        <div class="campo-grupo">
+          <label class="check-label">
+            <input type="checkbox" id="m-privacidad" />
+            <span>He leído y acepto la <a href="#" class="link-privacidad" id="abrir-privacidad">Política de Privacidad</a> <span class="obligatorio">*</span></span>
+          </label>
+        </div>
+
+        <button class="modal-btn" id="modal-enviar">Solicitar consulta gratuita</button>
+      </div>
+    </div>
+
+    <!-- Pantalla de éxito -->
+    <div class="modal-exito" id="modal-exito">
+      <div class="exito-icono">✅</div>
+      <h4>¡Solicitud recibida!</h4>
+      <p>Gracias, <strong id="exito-nombre"></strong>. Me pondré en contacto contigo en las próximas 24 horas para confirmar tu cita.</p>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">Lua — Nutrición & Dietética</div>
+    <p>Técnico superior en dietética especializada en nutrición clínica y deportiva. Consultas presenciales y online.</p>
+  </div>
+  <div>
+    <h4>Servicios</h4>
+    <ul>
+      <li><a href="#servicios">Consulta inicial gratuita</a></li>
+      <li><a href="#servicios">Plan nutricional</a></li>
+      <li><a href="#servicios">Seguimiento</a></li>
+      <li><a href="#servicios">Nutrición deportiva</a></li>
+      <li><a href="#servicios">Consulta online</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="footer-bottom">
+  © 2026 Lua Nutrición & Dietética · Todos los derechos reservados ·
+  <a href="#" id="abrir-privacidad-footer" style="color:rgba(255,255,255,.4); text-decoration:underline;">Política de Privacidad</a>
+</div>
+
+<!-- MODAL POLÍTICA DE PRIVACIDAD -->
+<div class="modal-overlay" id="modal-privacidad-overlay">
+  <div class="modal-privacidad" role="dialog" aria-modal="true" aria-labelledby="privacidad-titulo">
+    <button class="modal-cerrar" id="cerrar-privacidad" aria-label="Cerrar">✕</button>
+    <h2 id="privacidad-titulo">Política de Privacidad</h2>
+    <span class="priv-fecha">Última actualización: octubre de 2026</span>
+
+    <h3>1. Responsable del tratamiento</h3>
+    <p>En cumplimiento del Reglamento (UE) 2016/679 (RGPD) y la Ley Orgánica 3/2018 (LOPDGDD), te informamos de que los datos personales recogidos a través de este sitio web son tratados por:</p>
+    <ul>
+      <li><strong>Nombre:</strong> Lua Tomás Sudupe</li>
+      <li><strong>NIF:</strong> 76054496M</li>
+      <li><strong>Actividad:</strong> Técnico Superior en Dietética — Nutrición clínica y deportiva</li>
+      <li><strong>Correo electrónico:</strong> <a href="mailto:lua.tomas.nutri@gmail.com">lua.tomas.nutri@gmail.com</a></li>
+      <li><strong>Teléfono:</strong> +34 665 06 71 97</li>
+    </ul>
+
+    <h3>2. Datos que recogemos</h3>
+    <p>A través del formulario de solicitud de consulta recogemos los siguientes datos:</p>
+    <ul>
+      <li><strong>Obligatorios:</strong> nombre, apellidos, número de teléfono y correo electrónico.</li>
+      <li><strong>Opcionales:</strong> objetivo de salud y mensaje adicional.</li>
+    </ul>
+
+    <h3>3. Finalidad del tratamiento</h3>
+    <p>Los datos recogidos se utilizan exclusivamente para:</p>
+    <ul>
+      <li>Gestionar tu solicitud de consulta gratuita y ponernos en contacto contigo.</li>
+      <li>Ofrecerte información sobre los servicios de nutrición solicitados.</li>
+    </ul>
+    <p>No utilizamos tus datos para ninguna otra finalidad ni los cedemos a terceros.</p>
+
+    <h3>4. Base jurídica</h3>
+    <p>El tratamiento de tus datos se basa en tu <strong>consentimiento expreso</strong>, otorgado al marcar la casilla de aceptación del formulario (art. 6.1.a RGPD). Puedes retirar tu consentimiento en cualquier momento sin que ello afecte a la licitud del tratamiento previo.</p>
+
+    <h3>5. Conservación de los datos</h3>
+    <p>Tus datos se conservarán únicamente durante el tiempo necesario para gestionar tu solicitud y, en caso de que pases a ser paciente, durante la relación profesional y los plazos legales que correspondan. Si no se establece ninguna relación, los datos serán eliminados en un plazo máximo de 3 meses.</p>
+
+    <h3>6. Tus derechos</h3>
+    <p>Puedes ejercer en cualquier momento los derechos de acceso, rectificación, supresión, oposición, limitación y portabilidad de tus datos enviando un correo a <a href="mailto:lua.tomas.nutri@gmail.com">lua.tomas.nutri@gmail.com</a>, indicando en el asunto "Protección de datos" y adjuntando una copia de tu DNI.</p>
+    <p>Si consideras que el tratamiento no se ajusta a la normativa, tienes derecho a presentar una reclamación ante la <a href="https://www.aepd.es" target="_blank">Agencia Española de Protección de Datos (aepd.es)</a>.</p>
+
+    <h3>7. Seguridad</h3>
+    <p>Adoptamos las medidas técnicas y organizativas necesarias para proteger tus datos personales y evitar su pérdida, mal uso o acceso no autorizado.</p>
+
+    <div style="margin-top:2rem; padding-top:1.5rem; border-top:1px solid var(--beige-oscuro); text-align:center;">
+      <button class="btn-primary" id="cerrar-privacidad-btn" style="font-size:.88rem; padding:.7rem 2rem;">Entendido</button>
+    </div>
+  </div>
+</div>
+
+<!-- EmailJS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script>
+  // Navbar scroll shadow
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // Menú móvil
+  const navToggle = document.getElementById('nav-toggle');
+  const navLinks  = document.getElementById('nav-links');
+  function alternarMenu(abrir) {
+    const abierto = navLinks.classList.toggle('abierto', abrir);
+    navToggle.setAttribute('aria-expanded', abierto);
+    navToggle.setAttribute('aria-label', abierto ? 'Cerrar menú' : 'Abrir menú');
+  }
+  navToggle.addEventListener('click', () => alternarMenu());
+  navLinks.addEventListener('click', e => { if (e.target.closest('a')) alternarMenu(false); });
+
+  // ── RESEÑAS ──
+  // Con Firebase configurado las reseñas son públicas: se guardan en la colección
+  // "resenas" de Firestore y solo se muestran las que tienen "aprobada" = true.
+  // Mientras projectId y apiKey estén vacíos, se guardan solo en el navegador del visitante.
+  const FIREBASE = { projectId: '', apiKey: '' };
+  const usaFirebase = Boolean(FIREBASE.projectId && FIREBASE.apiKey);
+  const FIRESTORE_URL = `https://firestore.googleapis.com/v1/projects/${FIREBASE.projectId}/databases/(default)/documents`;
+  const STORAGE_KEY = 'lua_resenas_v1';
+
+  function cargarResenas() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+    catch { return []; }
+  }
+  function guardarResenas(arr) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
+  }
+  function formatearFecha(fecha) {
+    return fecha.toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
+  }
+
+  async function firestore(ruta, cuerpo) {
+    const resp = await fetch(`${FIRESTORE_URL}${ruta}?key=${FIREBASE.apiKey}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(cuerpo)
+    });
+    if (!resp.ok) throw new Error(`Firestore respondió ${resp.status}`);
+    return resp.json();
+  }
+
+  async function obtenerResenas() {
+    if (!usaFirebase) return cargarResenas();
+    const filas = await firestore(':runQuery', {
+      structuredQuery: {
+        from: [{ collectionId: 'resenas' }],
+        where: { fieldFilter: { field: { fieldPath: 'aprobada' }, op: 'EQUAL', value: { booleanValue: true } } },
+        limit: 100
+      }
+    });
+    return filas
+      .filter(f => f.document)
+      .map(f => {
+        const c = f.document.fields || {};
+        const ms = Date.parse(c.fecha && c.fecha.timestampValue) || 0;
+        return {
+          nombre: (c.nombre && c.nombre.stringValue) || '',
+          texto: (c.texto && c.texto.stringValue) || '',
+          estrellas: c.estrellas && c.estrellas.integerValue,
+          fecha: ms ? formatearFecha(new Date(ms)) : '',
+          ms
+        };
+      })
+      .sort((a, b) => b.ms - a.ms);
+  }
+
+  async function publicarResena({ nombre, texto, estrellas }) {
+    if (!usaFirebase) {
+      const resenas = cargarResenas();
+      resenas.unshift({ nombre, texto, estrellas, fecha: formatearFecha(new Date()) });
+      guardarResenas(resenas);
+      return;
+    }
+    // Se crea sin aprobar: no aparece en la web hasta que se marque "aprobada" en Firebase
+    await firestore('/resenas', {
+      fields: {
+        nombre:    { stringValue: nombre },
+        texto:     { stringValue: texto },
+        estrellas: { integerValue: String(estrellas) },
+        aprobada:  { booleanValue: false },
+        fecha:     { timestampValue: new Date().toISOString() }
+      }
+    });
+  }
+
+  const RESENAS_VACIAS = 'Todavía no hay reseñas. ¡Sé el primero en compartir tu experiencia!';
+
+  function pintarMensajeResenas(texto) {
+    document.getElementById('resenas-grid').innerHTML = `<div class="resena-vacia"><p>${escapeHtml(texto)}</p></div>`;
+  }
+
+  async function renderizarResenas() {
+    const grid = document.getElementById('resenas-grid');
+    let resenas;
+    try { resenas = await obtenerResenas(); }
+    catch (error) {
+      console.error('Error al cargar reseñas:', error);
+      pintarMensajeResenas('No se han podido cargar las reseñas ahora mismo.');
+      return;
+    }
+    if (resenas.length === 0) { pintarMensajeResenas(RESENAS_VACIAS); return; }
+    grid.innerHTML = resenas.map(r => {
+      const n = Math.min(5, Math.max(0, parseInt(r.estrellas, 10) || 0));
+      return `
+      <div class="testi-card">
+        <div class="estrellas-pub" role="img" aria-label="${n} de 5 estrellas">${'★'.repeat(n)}${'☆'.repeat(5 - n)}</div>
+        <p class="testi-texto">${escapeHtml(String(r.texto))}</p>
+        <div class="testi-autora">${escapeHtml(String(r.nombre))}</div>
+        <div class="testi-fecha">${escapeHtml(String(r.fecha))}</div>
+      </div>`;
+    }).join('');
+  }
+
+  function escapeHtml(str) {
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  // Selector de estrellas
+  let estrellasSeleccionadas = 0;
+  const spans = [...document.querySelectorAll('#estrellas-selector span')];
+  function iluminarEstrellas(hasta) {
+    spans.forEach(s => s.classList.toggle('activa', +s.dataset.val <= hasta));
+  }
+  function fijarEstrellas(val) {
+    estrellasSeleccionadas = val;
+    iluminarEstrellas(val);
+    spans.forEach(s => {
+      const elegida = +s.dataset.val === val;
+      s.setAttribute('aria-checked', elegida);
+      // Solo una estrella es alcanzable con Tab; entre ellas se navega con las flechas
+      s.tabIndex = elegida || (val === 0 && s.dataset.val === '1') ? 0 : -1;
+    });
+  }
+  spans.forEach(span => {
+    span.addEventListener('mouseenter', () => iluminarEstrellas(+span.dataset.val));
+    span.addEventListener('mouseleave', () => iluminarEstrellas(estrellasSeleccionadas));
+    span.addEventListener('click', () => fijarEstrellas(+span.dataset.val));
+    span.addEventListener('keydown', e => {
+      const val = +span.dataset.val;
+      let nuevo;
+      if (e.key === 'Enter' || e.key === ' ') nuevo = val;
+      else if (e.key === 'ArrowRight' || e.key === 'ArrowUp') nuevo = Math.min(5, val + 1);
+      else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') nuevo = Math.max(1, val - 1);
+      else return;
+      e.preventDefault();
+      fijarEstrellas(nuevo);
+      spans[nuevo - 1].focus();
+    });
+  });
+
+  // Contador de caracteres
+  const textarea = document.getElementById('resena-texto');
+  const charCount = document.getElementById('char-count');
+  textarea.addEventListener('input', () => {
+    charCount.textContent = `${textarea.value.length} / 400`;
+  });
+
+  // Enviar reseña
+  const btnResena = document.getElementById('btn-enviar');
+  btnResena.addEventListener('click', async () => {
+    const nombre = document.getElementById('resena-nombre').value.trim();
+    const texto = textarea.value.trim();
+    const aviso = document.getElementById('form-aviso');
+    const avisar = (mensaje, esError) => {
+      aviso.textContent = mensaje;
+      aviso.style.color = esError ? '#c0392b' : 'var(--verde)';
+    };
+
+    if (!nombre) { avisar('Por favor, escribe tu nombre.', true); return; }
+    if (estrellasSeleccionadas === 0) { avisar('Selecciona una valoración con estrellas.', true); return; }
+    if (texto.length < 10) { avisar('Cuéntanos un poquito más (mínimo 10 caracteres).', true); return; }
+
+    // Un bot que rellena el campo trampa recibe el mismo "gracias", pero no se guarda nada
+    const esBot = document.getElementById('resena-web').value !== '';
+
+    btnResena.disabled = true;
+    try {
+      if (!esBot) await publicarResena({ nombre, texto, estrellas: estrellasSeleccionadas });
+    } catch (error) {
+      console.error('Error al enviar reseña:', error);
+      avisar('No se ha podido enviar la reseña. Inténtalo de nuevo.', true);
+      return;
+    } finally {
+      btnResena.disabled = false;
+    }
+    if (!usaFirebase) await renderizarResenas();
+
+    // Reset
+    document.getElementById('resena-nombre').value = '';
+    textarea.value = '';
+    fijarEstrellas(0);
+    charCount.textContent = '0 / 400';
+    avisar(usaFirebase ? '¡Gracias! Tu reseña se publicará en cuanto sea revisada.' : '¡Gracias por tu reseña!', false);
+    setTimeout(() => aviso.textContent = '', usaFirebase ? 7000 : 4000);
+  });
+
+  renderizarResenas();
+
+  // ── MODAL ──
+  const overlay = document.getElementById('modal-overlay');
+
+  const CAMPOS_OBLIGATORIOS = ['m-nombre','m-apellidos','m-telefono','m-email'];
+
+  // Bloquea el scroll de la página mientras haya algún modal abierto
+  function actualizarScroll() {
+    const hayModal = document.querySelector('.modal-overlay.activo') !== null;
+    document.body.style.overflow = hayModal ? 'hidden' : '';
+  }
+  function limpiarErrores() {
+    CAMPOS_OBLIGATORIOS.forEach(id => document.getElementById(id).classList.remove('error'));
+    document.getElementById('m-privacidad').closest('.check-label').classList.remove('error-check');
+    document.getElementById('modal-error').textContent = '';
+  }
+
+  let focoPrevio = null;
+
+  function abrirModal() {
+    focoPrevio = document.activeElement;
+    overlay.classList.add('activo');
+    actualizarScroll();
+    document.getElementById('modal-contenido').style.display = '';
+    document.getElementById('modal-exito').style.display = 'none';
+    limpiarErrores();
+    overlay.querySelector('.modal').focus();
+  }
+  function cerrarModal() {
+    overlay.classList.remove('activo');
+    actualizarScroll();
+    // Devuelve el foco al botón que abrió el modal
+    if (focoPrevio) focoPrevio.focus();
+    focoPrevio = null;
+  }
+  function mostrarExito(nombre) {
+    document.getElementById('modal-contenido').style.display = 'none';
+    document.getElementById('exito-nombre').textContent = nombre;
+    document.getElementById('modal-exito').style.display = 'block';
+
+    ['m-nombre','m-apellidos','m-telefono','m-email','m-mensaje','m-web'].forEach(id => {
+      document.getElementById(id).value = '';
+    });
+    document.getElementById('m-objetivo').value = '';
+    document.getElementById('m-privacidad').checked = false;
+  }
+
+  document.querySelectorAll('.abrir-modal').forEach(el => {
+    el.addEventListener('click', e => { e.preventDefault(); abrirModal(); });
+  });
+
+  document.getElementById('modal-cerrar').addEventListener('click', cerrarModal);
+  overlay.addEventListener('click', e => { if (e.target === overlay) cerrarModal(); });
+  document.addEventListener('keydown', e => {
+    if (e.key !== 'Escape') return;
+    // Si la política está abierta encima del formulario, se cierra solo ella
+    if (privOverlay.classList.contains('activo')) cerrarPrivacidad();
+    else if (overlay.classList.contains('activo')) cerrarModal();
+    else alternarMenu(false);
+  });
+
+  // ── ENVÍO DEL FORMULARIO (EmailJS) ──
+  const EMAILJS_PUBLIC_KEY = '7weGkUZN6LablQ2-d';
+  const EMAILJS_SERVICE    = 'service_ubalk6f';
+  const EMAILJS_TEMPLATE   = 'template_m0ws50m';
+  const emailjsDisponible  = typeof emailjs !== 'undefined';
+  if (emailjsDisponible) emailjs.init(EMAILJS_PUBLIC_KEY);
+
+  const btnEnviar = document.getElementById('modal-enviar');
+  const TEXTO_BTN_ENVIAR = btnEnviar.textContent;
+
+  btnEnviar.addEventListener('click', () => {
+    const nombre    = document.getElementById('m-nombre').value.trim();
+    const apellidos = document.getElementById('m-apellidos').value.trim();
+    const telefono  = document.getElementById('m-telefono').value.trim();
+    const email     = document.getElementById('m-email').value.trim();
+    const objetivo  = document.getElementById('m-objetivo').value;
+    const mensaje   = document.getElementById('m-mensaje').value.trim();
+    const privacidad = document.getElementById('m-privacidad').checked;
+    const errorMsg  = document.getElementById('modal-error');
+
+    limpiarErrores();
+
+    let errores = [];
+    if (!nombre)    { document.getElementById('m-nombre').classList.add('error');    errores.push('nombre'); }
+    if (!apellidos) { document.getElementById('m-apellidos').classList.add('error'); errores.push('apellidos'); }
+    if (!telefono)  { document.getElementById('m-telefono').classList.add('error');  errores.push('teléfono'); }
+    if (!email)     { document.getElementById('m-email').classList.add('error');     errores.push('correo electrónico'); }
+
+    if (errores.length) {
+      errorMsg.textContent = `Por favor, rellena los campos obligatorios: ${errores.join(', ')}.`;
+      return;
+    }
+    if (!/^[\d\s\+\-\(\)]{7,}$/.test(telefono)) {
+      document.getElementById('m-telefono').classList.add('error');
+      errorMsg.textContent = 'Introduce un número de teléfono válido.';
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      document.getElementById('m-email').classList.add('error');
+      errorMsg.textContent = 'Introduce un correo electrónico válido.';
+      return;
+    }
+    if (!privacidad) {
+      document.getElementById('m-privacidad').closest('.check-label').classList.add('error-check');
+      errorMsg.textContent = 'Debes aceptar la Política de Privacidad para continuar.';
+      return;
+    }
+
+    // Un bot que rellena el campo trampa ve el mismo éxito, pero no se envía nada
+    if (document.getElementById('m-web').value !== '') {
+      mostrarExito(nombre);
+      return;
+    }
+
+    const ERROR_ENVIO = 'No se ha podido enviar la solicitud. Inténtalo de nuevo o escríbeme por WhatsApp.';
+    if (!emailjsDisponible) {
+      errorMsg.textContent = ERROR_ENVIO;
+      return;
+    }
+
+    const templateParams = {
+      nombre:    nombre,
+      apellidos: apellidos,
+      telefono:  telefono,
+      email:     email,
+      objetivo:  objetivo || '(no indicado)',
+      mensaje:   mensaje  || '(sin mensaje)'
+    };
+
+    btnEnviar.disabled = true;
+    btnEnviar.textContent = 'Enviando…';
+
+    emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, templateParams)
+      .then(() => {
+        // Solo se muestra el éxito cuando el email ha salido de verdad
+        mostrarExito(nombre);
+      }, error => {
+        console.error('Error al enviar email:', error);
+        errorMsg.textContent = ERROR_ENVIO;
+      })
+      .finally(() => {
+        btnEnviar.disabled = false;
+        btnEnviar.textContent = TEXTO_BTN_ENVIAR;
+      });
+  });
+
+  // ── MODAL PRIVACIDAD ──
+  const privOverlay = document.getElementById('modal-privacidad-overlay');
+
+  function abrirPrivacidad(e) {
+    if (e) e.preventDefault();
+    privOverlay.classList.add('activo');
+    actualizarScroll();
+  }
+  function cerrarPrivacidad() {
+    privOverlay.classList.remove('activo');
+    actualizarScroll();
+  }
+
+  document.getElementById('abrir-privacidad').addEventListener('click', abrirPrivacidad);
+  document.getElementById('abrir-privacidad-footer').addEventListener('click', abrirPrivacidad);
+  document.getElementById('cerrar-privacidad').addEventListener('click', cerrarPrivacidad);
+  document.getElementById('cerrar-privacidad-btn').addEventListener('click', cerrarPrivacidad);
+  privOverlay.addEventListener('click', e => { if (e.target === privOverlay) cerrarPrivacidad(); });
+</script>
+</body>
+</html>
