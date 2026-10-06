@@ -1336,7 +1336,7 @@
   // Con Firebase configurado las reseñas son públicas: se guardan en la colección
   // "resenas" de Firestore y solo se muestran las que tienen "aprobada" = true.
   // Mientras projectId y apiKey estén vacíos, se guardan solo en el navegador del visitante.
-  const FIREBASE = { projectId: '', apiKey: '' };
+  const FIREBASE = { projectId: 'lua-nutricion', apiKey: 'AIzaSyD2CeqDclvd3NA0GJQC57FrmcVroPRVhxY' };
   const usaFirebase = Boolean(FIREBASE.projectId && FIREBASE.apiKey);
   const FIRESTORE_URL = `https://firestore.googleapis.com/v1/projects/${FIREBASE.projectId}/databases/(default)/documents`;
   const STORAGE_KEY = 'lua_resenas_v1';
