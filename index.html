@@ -4,13 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Lua — Nutrición & Dietética</title>
-  <meta name="description" content="Lua, Técnico Superior en Dietética especializada en nutrición clínica y deportiva. Planes nutricionales personalizados, sin dietas restrictivas. Primera consulta gratuita. Consultas 100 % online." />
+  <meta name="description" content="Lua Tomás, dietista (TSD). Nutrición, entrenamiento y hábitos saludables, sin dietas restrictivas. Valoración inicial gratuita. A domicilio u online." />
   <meta name="theme-color" content="#3A7D44" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="es_ES" />
   <meta property="og:site_name" content="Lua — Nutrición & Dietética" />
   <meta property="og:title" content="Lua — Nutrición & Dietética" />
-  <meta property="og:description" content="Un plan nutricional hecho para tu cuerpo, tu ritmo y tus metas reales. Primera consulta gratuita, 100 % online." />
+  <meta property="og:description" content="Un plan nutricional hecho para tu cuerpo, tu ritmo y tus metas reales. Valoración inicial gratuita, a domicilio u online." />
   <meta name="twitter:card" content="summary" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='2 5 33 33'%3E%3Cpath fill='%233A7D44' d='M15.53 8.22A14 14 0 1 0 31.78 24.47 11.5 11.5 0 0 1 15.53 8.22Z'/%3E%3Cpath fill='%235FAD64' d='M21 19C20 12 25 7 33 7c0 8-5 13-12 12Z'/%3E%3C/svg%3E" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Cormorant+Garamond:wght@500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
@@ -678,20 +678,150 @@
       letter-spacing: .04em;
     }
 
-    /* Grid de 5 servicios simétrico: 3 arriba, 2 centradas abajo */
+    /* Grid de servicios: las 4 áreas en una fila */
     .servicios-grid {
-      display: grid !important;
-      grid-template-columns: repeat(6, 1fr) !important;
-      gap: 0 !important;
-      background: transparent !important;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      background: transparent;
     }
     .servicio-card {
-      grid-column: span 2;
       border: 1px solid var(--beige-oscuro);
       margin: -1px 0 0 -1px;
+      padding: 2.4rem 1.8rem;
     }
-    .servicio-card:nth-child(4) { grid-column: 2 / span 2; }
-    .servicio-card:nth-child(5) { grid-column: 4 / span 2; }
+    .servicio-card h3 { margin-bottom: .3rem; }
+    .servicio-lema {
+      font-size: .74rem !important;
+      font-weight: 500;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--verde) !important;
+      margin-bottom: .9rem;
+    }
+    .section-intro {
+      margin-top: 1rem;
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--texto-suave);
+    }
+    .servicios-nota {
+      margin-top: 2.2rem;
+      font-size: .92rem;
+      color: var(--texto-suave);
+      max-width: 70ch;
+    }
+    .servicios-nota strong { color: var(--texto); font-weight: 500; }
+
+    /* Modalidad: a domicilio / online */
+    .modalidad {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 3.5rem;
+    }
+    .modalidad-card {
+      display: flex;
+      gap: 1.4rem;
+      align-items: flex-start;
+      background: var(--blanco);
+      padding: 2rem 2.2rem;
+    }
+    .modalidad-card .servicio-icono { margin-bottom: 0; flex-shrink: 0; }
+    .modalidad-tipo {
+      font-size: .74rem;
+      font-weight: 500;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--verde);
+      margin-bottom: .3rem;
+    }
+    .modalidad-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: .4rem;
+    }
+    .modalidad-card p:last-child { font-size: .9rem; color: var(--texto-suave); line-height: 1.7; }
+
+    /* Mi enfoque (dentro de Sobre mí) */
+    .enfoque {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.8rem 2.5rem;
+      margin-top: 2.6rem;
+      padding-top: 2.4rem;
+      border-top: 1px solid var(--beige-oscuro);
+    }
+    .enfoque-item h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--verde);
+      margin-bottom: .4rem;
+    }
+    .sobre .enfoque-item p { font-size: .88rem; line-height: 1.7; margin-bottom: 0; }
+
+    /* ── TARIFAS ── */
+    .tarifas {
+      background: var(--verde-suave);
+      padding: 7rem 8%;
+    }
+    .tarifas-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .tarifa-card {
+      background: var(--blanco);
+      padding: 2.2rem 2rem;
+      display: flex;
+      flex-direction: column;
+    }
+    .tarifa-nombre {
+      font-size: .76rem;
+      font-weight: 500;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--verde);
+      margin-bottom: 1.1rem;
+    }
+    .tarifa-precios { display: flex; gap: 2.2rem; margin-bottom: 1rem; }
+    .tarifa-precio {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-weight: 600;
+      line-height: 1.1;
+      color: var(--texto);
+    }
+    .tarifa-precio span {
+      display: block;
+      font-family: 'Inter', sans-serif;
+      font-size: .72rem;
+      font-weight: 500;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--texto-suave);
+      margin-top: .35rem;
+    }
+    .tarifa-precio small { font-size: 1rem; font-weight: 400; margin-left: .2rem; }
+    .tarifa-ahorro { font-size: .82rem; font-weight: 500; color: var(--verde); margin-bottom: .7rem; }
+    .tarifa-desc { font-size: .9rem; color: var(--texto-suave); line-height: 1.7; }
+    .tarifa-card.destacada { background: var(--verde); }
+    .tarifa-card.destacada .tarifa-nombre,
+    .tarifa-card.destacada .tarifa-ahorro { color: var(--verde-suave); }
+    .tarifa-card.destacada .tarifa-precio { color: var(--blanco); }
+    .tarifa-card.destacada .tarifa-desc { color: rgba(255,255,255,.8); }
+    .tarifas-subtitulo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin: 3.5rem 0 1.5rem;
+    }
+    .tarifas-nota { margin-top: 1.8rem; font-size: .84rem; color: var(--texto-suave); }
+
+    @media (max-width: 1100px) {
+      .servicios-grid { grid-template-columns: repeat(2, 1fr); }
+    }
 
     /* ── RESEÑAS ── */
     .resena-vacia {
@@ -1000,9 +1130,8 @@
       .stats { grid-template-columns: 1fr; }
       .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,.15); }
       .servicios-grid { grid-template-columns: 1fr !important; }
-      .servicio-card,
-      .servicio-card:nth-child(4),
-      .servicio-card:nth-child(5) { grid-column: auto; }
+      .modalidad, .enfoque, .tarifas-grid { grid-template-columns: 1fr; }
+      .tarifas { padding: 5rem 8%; }
       .sobre { grid-template-columns: 1fr; gap: 3rem; }
       .proceso-pasos { grid-template-columns: 1fr 1fr; }
       .proceso-pasos::before { display: none; }
@@ -1050,7 +1179,8 @@
     <li><a href="#servicios">Servicios</a></li>
     <li><a href="#sobre">Sobre mí</a></li>
     <li><a href="#proceso">Proceso</a></li>
-    <li><a href="#" class="nav-cta abrir-modal">Reservar consulta gratuita</a></li>
+    <li><a href="#tarifas">Tarifas</a></li>
+    <li><a href="#" class="nav-cta abrir-modal">Reservar valoración gratuita</a></li>
     <li>
       <a href="https://wa.me/34665067197?text=Hola%20Lua%2C%20me%20gustar%C3%ADa%20obtener%20m%C3%A1s%20informaci%C3%B3n%20sobre%20tus%20servicios%20de%20nutrici%C3%B3n." target="_blank" class="nav-wa">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
@@ -1066,7 +1196,7 @@
     <h1>Comer bien es <em>conocerte</em> a ti mismo</h1>
     <p class="hero-desc">No dietas, no restricciones. Un plan nutricional hecho para tu cuerpo, tu ritmo y tus metas reales.</p>
     <div class="btn-group">
-      <a href="#" class="btn-primary abrir-modal">Reservar consulta</a>
+      <a href="#" class="btn-primary abrir-modal">Valoración gratuita</a>
       <a href="#sobre" class="btn-secondary">Conocer más</a>
     </div>
   </div>
@@ -1105,34 +1235,55 @@
 <!-- SERVICIOS -->
 <section class="servicios" id="servicios">
   <div class="section-header">
-    <p class="eyebrow">Lo que ofrezco</p>
-    <h2>Servicios diseñados para tu bienestar real</h2>
+    <p class="eyebrow">Servicios</p>
+    <h2>¿En qué área quieres transformar tu vida?</h2>
+    <p class="section-intro">Tu objetivo es el punto de partida. El plan lo construimos contigo.</p>
   </div>
   <div class="servicios-grid">
     <div class="servicio-card">
-      <div class="servicio-icono"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></div>
-      <h3>Consulta inicial <span class="tag-gratis">Gratuita</span></h3>
-      <p>Tu primer paso, sin compromiso. Nos conocemos, hablo contigo sobre tus hábitos, objetivos y cómo te sientes. Quiero entenderte antes de proponer nada.</p>
-    </div>
-    <div class="servicio-card">
-      <div class="servicio-icono"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2M12 11h4M12 16h4M8 11h.01M8 16h.01"/></svg></div>
-      <h3>Plan nutricional</h3>
-      <p>Si tras la primera consulta decides continuar, diseño un plan completamente a tu medida: menús reales, adaptados a tu día a día, sin prohibiciones innecesarias.</p>
+      <div class="servicio-icono"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg></div>
+      <h3>Pérdida de peso</h3>
+      <p class="servicio-lema">Grasa corporal + hábitos</p>
+      <p>Reducción progresiva de grasa preservando tu masa muscular, sin pasar hambre.</p>
     </div>
     <div class="servicio-card">
       <div class="servicio-icono"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 7l-8.5 8.5-5-5L2 17M16 7h6v6"/></svg></div>
-      <h3>Seguimiento</h3>
-      <p>El cambio verdadero necesita acompañamiento. Revisamos juntos cómo evoluciona tu proceso y ajustamos lo que haga falta para que el plan siga funcionando para ti.</p>
+      <h3>Deporte</h3>
+      <p class="servicio-lema">Rendimiento + recuperación</p>
+      <p>Estrategias de alimentación y suplementación orientadas al rendimiento deportivo.</p>
     </div>
     <div class="servicio-card">
       <div class="servicio-icono"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 5.5v13M17.5 5.5v13M2.5 9v6M21.5 9v6M6.5 12h11"/></svg></div>
-      <h3>Nutrición deportiva</h3>
-      <p>Especializada en adaptar la alimentación al entrenamiento. Tanto si empiezas a moverte como si ya compites, la nutrición marca la diferencia en tu rendimiento y recuperación.</p>
+      <h3>Fuerza</h3>
+      <p class="servicio-lema">Músculo + rendimiento</p>
+      <p>Rutinas de musculación, ganancia muscular limpia y suplementación efectiva.</p>
     </div>
     <div class="servicio-card">
+      <div class="servicio-icono"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></div>
+      <h3>Nutrición clínica</h3>
+      <p class="servicio-lema">Salud digestiva + hormonal</p>
+      <p>Abordaje específico de inflamación, SIBO, intolerancias y perfil metabólico.</p>
+    </div>
+  </div>
+  <p class="servicios-nota"><strong>¿Y si tu objetivo es más de uno?</strong> Tus objetivos pueden ir de la mano: integramos nutrición, entrenamiento y hábitos para crear una estrategia completa, adaptada a ti.</p>
+
+  <!-- Modalidad -->
+  <div class="modalidad">
+    <div class="modalidad-card">
+      <div class="servicio-icono"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1Z"/></svg></div>
+      <div>
+        <p class="modalidad-tipo">A domicilio</p>
+        <h3>Voy a tu casa</h3>
+        <p>Llevo báscula de bioimpedancia y material completo para realizar la valoración.</p>
+      </div>
+    </div>
+    <div class="modalidad-card">
       <div class="servicio-icono"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M22 8l-6 4 6 4V8Z"/></svg></div>
-      <h3>Consulta online</h3>
-      <p>Todas las consultas son por videollamada. La misma atención y dedicación, desde donde estés y sin desplazamientos.</p>
+      <div>
+        <p class="modalidad-tipo">Online</p>
+        <h3>Desde donde estés</h3>
+        <p>Videollamada interactiva y contacto continuo por WhatsApp.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -1143,11 +1294,24 @@
     <h2>Hola, soy Lua. Y esto va de mucho más que comer bien.</h2>
     <p>Soy Técnico Superior en Dietética, especializada en nutrición clínica y deportiva. Elegí esta profesión porque creo, de verdad, que lo que ponemos en el plato tiene el poder de transformar cómo nos sentimos por dentro y por fuera.</p>
     <p>Mi manera de trabajar es cercana y sin juicios. No creo en las dietas estrictas ni en las listas de alimentos prohibidos. Creo en escucharte, en entender tu vida y en construir contigo un camino que tenga sentido para ti, y que puedas mantener en el tiempo.</p>
-    <p>Porque cuidarte bien no debería ser un esfuerzo. Debería hacerte sentir mejor con tu salud, con tu cuerpo y con tu mente.</p>
-    <div class="credenciales">
-      <div class="credencial">Técnico Superior en Dietética</div>
-      <div class="credencial">Especializada en nutrición clínica</div>
-      <div class="credencial">Especializada en nutrición deportiva</div>
+    <p>Mi objetivo es que mejores tu salud y tu relación con la alimentación, paso a paso. No se trata de comer perfecto, sino de aprender a comer mejor para tu vida real.</p>
+    <div class="enfoque">
+      <div class="enfoque-item">
+        <h3>Criterio científico</h3>
+        <p>Pautas respaldadas por la evidencia más reciente en nutrición y suplementación deportiva.</p>
+      </div>
+      <div class="enfoque-item">
+        <h3>Flexibilidad real</h3>
+        <p>Sin prohibiciones absurdas ni dietas restrictivas. Buscamos adherencia y educación a largo plazo.</p>
+      </div>
+      <div class="enfoque-item">
+        <h3>Máxima comodidad</h3>
+        <p>Atención a domicilio con material de valoración o formato online 100 % interactivo.</p>
+      </div>
+      <div class="enfoque-item">
+        <h3>Objetivos medibles</h3>
+        <p>Un plan claro para saber qué hacer, revisar avances y ajustar cuando sea necesario.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -1161,25 +1325,80 @@
   <div class="proceso-pasos">
     <div class="paso">
       <div class="paso-num">1</div>
-      <h4>Primera consulta</h4>
-      <p>Hablamos de ti: hábitos, historial médico, rutinas y lo que quieres lograr. Sin juicios.</p>
+      <h4>Valoración gratuita</h4>
+      <p>Una llamada de 15–20 minutos para conocernos, hablar de tus objetivos y ver cómo puedo ayudarte. Sin compromiso.</p>
     </div>
     <div class="paso">
       <div class="paso-num">2</div>
-      <h4>Diseño del plan</h4>
-      <p>En 48 horas recibes tu plan personalizado: menús, recetas y estrategias prácticas.</p>
+      <h4>Primera consulta</h4>
+      <p>Valoración inicial, mediciones corporales y elaboración de tu menú personalizado, adaptado a tus objetivos y tu contexto.</p>
     </div>
     <div class="paso">
       <div class="paso-num">3</div>
-      <h4>Puesta en marcha</h4>
-      <p>Comienzas con soporte por mensaje en los primeros 7 días para resolver cualquier duda.</p>
+      <h4>Seguimiento</h4>
+      <p>Revisamos tu evolución y reajustamos el menú y las pautas según lo que necesites.</p>
     </div>
     <div class="paso">
       <div class="paso-num">4</div>
-      <h4>Seguimiento</h4>
-      <p>Revisamos juntos avances cada mes y ajustamos lo que haga falta para mantener el rumbo.</p>
+      <h4>Resultados reales</h4>
+      <p>Más energía, mejor composición corporal y hábitos que puedes mantener en el tiempo.</p>
     </div>
   </div>
+</section>
+
+<!-- TARIFAS -->
+<section class="tarifas" id="tarifas">
+  <div class="section-header">
+    <p class="eyebrow">Tarifas</p>
+    <h2>Precios claros, sin sorpresas</h2>
+    <p class="section-intro">Una inversión en tu salud, adaptada a tus necesidades.</p>
+  </div>
+  <div class="tarifas-grid">
+    <div class="tarifa-card">
+      <p class="tarifa-nombre">Valoración inicial</p>
+      <div class="tarifa-precios"><p class="tarifa-precio">Gratis</p></div>
+      <p class="tarifa-desc">Llamada de 15–20 minutos para conocernos, conocer tus objetivos y valorar cómo puedo ayudarte.</p>
+    </div>
+    <div class="tarifa-card">
+      <p class="tarifa-nombre">Primera consulta</p>
+      <div class="tarifa-precios">
+        <p class="tarifa-precio">40 €<span>Online</span></p>
+        <p class="tarifa-precio">50 €<span>A domicilio</span></p>
+      </div>
+      <p class="tarifa-desc">Valoración inicial, mediciones corporales y elaboración de tu menú personalizado, adaptado a tus objetivos y contexto.</p>
+    </div>
+    <div class="tarifa-card">
+      <p class="tarifa-nombre">Seguimiento</p>
+      <div class="tarifa-precios">
+        <p class="tarifa-precio">30 €<span>Online</span></p>
+        <p class="tarifa-precio">40 €<span>A domicilio</span></p>
+      </div>
+      <p class="tarifa-desc">Revisión de tu evolución y reajuste del menú y las pautas según tus necesidades.</p>
+    </div>
+  </div>
+
+  <h3 class="tarifas-subtitulo">Packs: más acompañamiento, más constancia</h3>
+  <div class="tarifas-grid">
+    <div class="tarifa-card">
+      <p class="tarifa-nombre">Pack Inicio Paso a Paso · Online</p>
+      <div class="tarifa-precios"><p class="tarifa-precio">90 €</p></div>
+      <p class="tarifa-ahorro">Por separado 100 € · Ahorras 10 €</p>
+      <p class="tarifa-desc">Incluye la primera consulta y 2 seguimientos online.</p>
+    </div>
+    <div class="tarifa-card">
+      <p class="tarifa-nombre">Pack Inicio Paso a Paso · Domicilio</p>
+      <div class="tarifa-precios"><p class="tarifa-precio">120 €</p></div>
+      <p class="tarifa-ahorro">Por separado 130 € · Ahorras 10 €</p>
+      <p class="tarifa-desc">Incluye la primera consulta y 2 seguimientos a domicilio.</p>
+    </div>
+    <div class="tarifa-card destacada">
+      <p class="tarifa-nombre">Servicio Premium 360º</p>
+      <div class="tarifa-precios"><p class="tarifa-precio">75 €<small>/mes</small></p></div>
+      <p class="tarifa-ahorro">Nutrición + entrenamiento + suplementación</p>
+      <p class="tarifa-desc">Menú, rutina de musculación y suplementación personalizados. 100 % online, con un seguimiento mensual y contacto directo para resolver dudas.</p>
+    </div>
+  </div>
+  <p class="tarifas-nota">A domicilio: hasta 40 km incluidos. Más de 40 km, suplemento según distancia, siempre comunicado antes de reservar.</p>
 </section>
 
 <!-- RESEÑAS -->
@@ -1228,8 +1447,8 @@
 <!-- CTA FINAL -->
 <section class="cta-final">
   <div>
-    <h2>Tu primera consulta es gratuita. Sin compromiso.</h2>
-    <p>Da el primer paso hacia sentirte mejor. Por videollamada, desde donde estés.</p>
+    <h2>Tu valoración inicial es gratuita. Sin compromiso.</h2>
+    <p>Una llamada de 15–20 minutos para conocernos. Después, a domicilio u online, como prefieras.</p>
   </div>
   <a href="#" class="btn-blanco abrir-modal">Reservar ahora</a>
 </section>
@@ -1248,7 +1467,7 @@
     <!-- Formulario -->
     <div id="modal-contenido">
       <div class="modal-icono"><svg class="logo-marca" aria-hidden="true"><use href="#logo-lua"/></svg></div>
-      <h3 id="modal-titulo">Reserva tu consulta gratuita</h3>
+      <h3 id="modal-titulo">Reserva tu valoración gratuita</h3>
       <p class="modal-subtitulo">Sin compromiso. Cuéntame un poco sobre ti y me pongo en contacto contigo para encontrar el mejor momento.</p>
 
       <div class="modal-form">
@@ -1303,7 +1522,7 @@
           </label>
         </div>
 
-        <button class="modal-btn" id="modal-enviar">Solicitar consulta gratuita</button>
+        <button class="modal-btn" id="modal-enviar">Solicitar valoración gratuita</button>
       </div>
     </div>
 
@@ -1323,7 +1542,7 @@
       <svg class="logo-marca" aria-hidden="true"><use href="#logo-lua"/></svg>
       <span class="logo-texto"><span class="logo-nombre">Lua</span><span class="logo-lema">Nutrición &amp; Dietética</span></span>
     </div>
-    <p>Técnico superior en dietética especializada en nutrición clínica y deportiva. Consultas online.</p>
+    <p>Técnico superior en dietética especializada en nutrición clínica y deportiva. Consultas a domicilio y online.</p>
     <ul class="footer-contacto">
       <li><span>Teléfono</span><a href="tel:+34665067197">+34 665 06 71 97</a></li>
       <li><span>Correo</span><a href="mailto:lua.tomas.nutri@gmail.com">lua.tomas.nutri@gmail.com</a></li>
@@ -1333,11 +1552,11 @@
   <div>
     <h4>Servicios</h4>
     <ul>
-      <li><a href="#servicios">Consulta inicial gratuita</a></li>
-      <li><a href="#servicios">Plan nutricional</a></li>
-      <li><a href="#servicios">Seguimiento</a></li>
-      <li><a href="#servicios">Nutrición deportiva</a></li>
-      <li><a href="#servicios">Consulta online</a></li>
+      <li><a href="#servicios">Pérdida de peso</a></li>
+      <li><a href="#servicios">Deporte</a></li>
+      <li><a href="#servicios">Fuerza</a></li>
+      <li><a href="#servicios">Nutrición clínica</a></li>
+      <li><a href="#tarifas">Tarifas</a></li>
     </ul>
   </div>
 </footer>
@@ -1374,7 +1593,7 @@
     <h3>3. Finalidad del tratamiento</h3>
     <p>Los datos recogidos se utilizan exclusivamente para:</p>
     <ul>
-      <li>Gestionar tu solicitud de consulta gratuita y ponernos en contacto contigo.</li>
+      <li>Gestionar tu solicitud de valoración gratuita y ponernos en contacto contigo.</li>
       <li>Ofrecerte información sobre los servicios de nutrición solicitados.</li>
       <li>Publicar en este sitio web las reseñas enviadas por los usuarios.</li>
     </ul>
@@ -1418,7 +1637,7 @@
   });
 
   // Animaciones al hacer scroll: cada bloque aparece la primera vez que entra en pantalla
-  const animables = document.querySelectorAll('.section-header, .servicio-card, .sobre-texto, .paso, .resena-form-wrap, .cta-final > div');
+  const animables = document.querySelectorAll('.section-header, .servicio-card, .servicios-nota, .modalidad-card, .sobre-texto, .paso, .tarifa-card, .tarifas-subtitulo, .resena-form-wrap, .cta-final > div');
   if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
     document.documentElement.classList.add('js-anim');
     const observador = new IntersectionObserver(entradas => {
@@ -1431,7 +1650,7 @@
     animables.forEach(el => {
       el.classList.add('revelar');
       // Las tarjetas de una misma fila entran escalonadas (el retardo no afecta al hover)
-      if (el.matches('.servicio-card, .paso')) {
+      if (el.matches('.servicio-card, .paso, .tarifa-card, .modalidad-card')) {
         const retardo = ([...el.parentElement.children].indexOf(el) % 4) * 90;
         el.style.transitionDelay = `${retardo}ms, ${retardo}ms, 0s`;
       }
