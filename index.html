@@ -692,6 +692,7 @@
     }
     .char-count { font-size: .78rem; color: var(--texto-suave); }
     .form-aviso { font-size: .82rem; color: var(--verde); min-height: 1.2em; }
+    .form-legal { font-size: .78rem; color: var(--texto-suave); }
 
     /* Cards de reseña publicadas */
     .testi-card .estrellas-pub {
@@ -1143,6 +1144,7 @@
         <span class="char-count" id="char-count">0 / 400</span>
         <button class="btn-primary" id="btn-enviar">Publicar reseña</button>
       </div>
+      <p class="form-legal">Al publicar tu reseña aceptas la <a href="#" class="link-privacidad" id="abrir-privacidad-resena">Política de Privacidad</a>.</p>
       <p class="form-aviso" id="form-aviso" role="status"></p>
     </div>
   </div>
@@ -1284,26 +1286,37 @@
       <li><strong>Obligatorios:</strong> nombre, apellidos, número de teléfono y correo electrónico.</li>
       <li><strong>Opcionales:</strong> objetivo de salud y mensaje adicional.</li>
     </ul>
+    <p>A través del formulario de reseñas recogemos el nombre que indiques, tu valoración y el texto de la reseña. Estos datos se publican en este sitio web y son visibles para cualquier visitante, por lo que te recomendamos no incluir información personal o de salud que no quieras hacer pública.</p>
 
     <h3>3. Finalidad del tratamiento</h3>
     <p>Los datos recogidos se utilizan exclusivamente para:</p>
     <ul>
       <li>Gestionar tu solicitud de consulta gratuita y ponernos en contacto contigo.</li>
       <li>Ofrecerte información sobre los servicios de nutrición solicitados.</li>
+      <li>Publicar en este sitio web las reseñas enviadas por los usuarios.</li>
     </ul>
-    <p>No utilizamos tus datos para ninguna otra finalidad ni los cedemos a terceros.</p>
+    <p>No utilizamos tus datos para ninguna otra finalidad, ni los vendemos o cedemos a terceros para sus propios fines.</p>
 
     <h3>4. Base jurídica</h3>
-    <p>El tratamiento de tus datos se basa en tu <strong>consentimiento expreso</strong>, otorgado al marcar la casilla de aceptación del formulario (art. 6.1.a RGPD). Puedes retirar tu consentimiento en cualquier momento sin que ello afecte a la licitud del tratamiento previo.</p>
+    <p>El tratamiento de tus datos se basa en tu <strong>consentimiento expreso</strong>, otorgado al marcar la casilla de aceptación del formulario o al enviar tu reseña (art. 6.1.a RGPD). Puedes retirar tu consentimiento en cualquier momento sin que ello afecte a la licitud del tratamiento previo.</p>
 
-    <h3>5. Conservación de los datos</h3>
+    <h3>5. Proveedores que tratan datos por nuestra cuenta</h3>
+    <p>Para prestar el servicio utilizamos los siguientes proveedores, que acceden a los datos únicamente para cumplir su función y siguiendo nuestras instrucciones:</p>
+    <ul>
+      <li><strong>EmailJS:</strong> servicio de envío de correo que hace llegar a nuestro buzón los datos del formulario de solicitud de consulta.</li>
+      <li><strong>Google Firebase (Google Ireland Limited):</strong> servicio de base de datos en el que se almacenan las reseñas publicadas.</li>
+    </ul>
+    <p>Estos proveedores pueden tratar datos fuera del Espacio Económico Europeo. En ese caso, la transferencia se realiza con las garantías previstas en el RGPD, como las cláusulas contractuales tipo aprobadas por la Comisión Europea.</p>
+
+    <h3>6. Conservación de los datos</h3>
     <p>Tus datos se conservarán únicamente durante el tiempo necesario para gestionar tu solicitud y, en caso de que pases a ser paciente, durante la relación profesional y los plazos legales que correspondan. Si no se establece ninguna relación, los datos serán eliminados en un plazo máximo de 3 meses.</p>
+    <p>Las reseñas permanecen publicadas hasta que solicites su retirada escribiendo a la dirección indicada en esta política.</p>
 
-    <h3>6. Tus derechos</h3>
+    <h3>7. Tus derechos</h3>
     <p>Puedes ejercer en cualquier momento los derechos de acceso, rectificación, supresión, oposición, limitación y portabilidad de tus datos enviando un correo a <a href="mailto:lua.tomas.nutri@gmail.com">lua.tomas.nutri@gmail.com</a>, indicando en el asunto "Protección de datos" y adjuntando una copia de tu DNI.</p>
     <p>Si consideras que el tratamiento no se ajusta a la normativa, tienes derecho a presentar una reclamación ante la <a href="https://www.aepd.es" target="_blank">Agencia Española de Protección de Datos (aepd.es)</a>.</p>
 
-    <h3>7. Seguridad</h3>
+    <h3>8. Seguridad</h3>
     <p>Adoptamos las medidas técnicas y organizativas necesarias para proteger tus datos personales y evitar su pérdida, mal uso o acceso no autorizado.</p>
 
     <div style="margin-top:2rem; padding-top:1.5rem; border-top:1px solid var(--beige-oscuro); text-align:center;">
@@ -1680,6 +1693,7 @@
 
   document.getElementById('abrir-privacidad').addEventListener('click', abrirPrivacidad);
   document.getElementById('abrir-privacidad-footer').addEventListener('click', abrirPrivacidad);
+  document.getElementById('abrir-privacidad-resena').addEventListener('click', abrirPrivacidad);
   document.getElementById('cerrar-privacidad').addEventListener('click', cerrarPrivacidad);
   document.getElementById('cerrar-privacidad-btn').addEventListener('click', cerrarPrivacidad);
   privOverlay.addEventListener('click', e => { if (e.target === privOverlay) cerrarPrivacidad(); });
