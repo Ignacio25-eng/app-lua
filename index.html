@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Lua — Nutrición & Dietética</title>
+  <title>Lua — Dietista-TSD</title>
   <meta name="description" content="Lua Tomás, dietista (TSD). Nutrición, entrenamiento y hábitos saludables, sin dietas restrictivas. Valoración inicial gratuita. A domicilio u online." />
   <meta name="theme-color" content="#3A7D44" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="es_ES" />
-  <meta property="og:site_name" content="Lua — Nutrición & Dietética" />
-  <meta property="og:title" content="Lua — Nutrición & Dietética" />
+  <meta property="og:site_name" content="Lua — Dietista-TSD" />
+  <meta property="og:title" content="Lua — Dietista-TSD" />
   <meta property="og:description" content="Un plan nutricional hecho para tu cuerpo, tu ritmo y tus metas reales. Valoración inicial gratuita, a domicilio u online." />
   <meta name="twitter:card" content="summary" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='2 5 33 33'%3E%3Cpath fill='%233A7D44' d='M15.53 8.22A14 14 0 1 0 31.78 24.47 11.5 11.5 0 0 1 15.53 8.22Z'/%3E%3Cpath fill='%235FAD64' d='M21 19C20 12 25 7 33 7c0 8-5 13-12 12Z'/%3E%3C/svg%3E" />
@@ -27,6 +27,8 @@
       --texto:        #2C2C2C;
       --texto-suave:  #6B6B6B;
       --blanco:       #FFFFFF;
+      --radio:        16px;  /* tarjetas y ventanas */
+      --radio-btn:    10px;  /* botones y campos */
     }
 
     html { scroll-behavior: smooth; }
@@ -96,40 +98,30 @@
     .footer-logo .logo-nombre { color: var(--blanco); }
     .footer-logo .logo-lema { color: rgba(255,255,255,.55); }
 
-    .nav-links { display: flex; gap: 2.4rem; list-style: none; }
+    .nav-links { display: flex; align-items: center; gap: 2.4rem; list-style: none; }
     .nav-links a {
       text-decoration: none;
       font-size: .88rem;
       font-weight: 500;
-      color: var(--texto-suave);
+      color: var(--verde);
       letter-spacing: .03em;
       transition: color .2s;
     }
-    .nav-links a:hover { color: var(--verde); }
+    .nav-links a:hover { color: var(--verde-claro); }
 
-    .nav-cta {
-      background: var(--verde);
-      color: var(--blanco) !important;
-      padding: .5rem 1.2rem;
-      border-radius: 2px;
-      transition: background .2s !important;
-    }
-    .nav-cta:hover { background: var(--verde-claro) !important; color: var(--blanco) !important; }
-
-    .nav-wa {
+    /* Los dos botones del menú comparten forma, color y altura para quedar alineados */
+    .nav-cta, .nav-wa {
       display: flex;
       align-items: center;
       gap: .45rem;
-      background: #25D366;
+      height: 2.5rem;
+      padding: 0 1.2rem;
+      background: var(--verde);
       color: var(--blanco) !important;
-      padding: .5rem 1.1rem;
-      border-radius: 2px;
-      font-size: .88rem;
-      font-weight: 500;
-      text-decoration: none;
-      transition: background .2s;
+      border-radius: var(--radio-btn);
+      transition: background .2s !important;
     }
-    .nav-wa:hover { background: #1ebe5a !important; color: var(--blanco) !important; }
+    .nav-cta:hover, .nav-wa:hover { background: var(--verde-claro); color: var(--blanco) !important; }
     .nav-wa svg { flex-shrink: 0; }
 
     /* Botón de menú (solo móvil) */
@@ -174,7 +166,7 @@
       font-size: .78rem;
       white-space: nowrap;
       padding: .4rem .8rem;
-      border-radius: 2px;
+      border-radius: var(--radio-btn);
       opacity: 0;
       pointer-events: none;
       transition: opacity .2s;
@@ -247,7 +239,7 @@
       color: var(--blanco);
       padding: .85rem 2rem;
       border: none;
-      border-radius: 2px;
+      border-radius: var(--radio-btn);
       font-family: 'Inter', sans-serif;
       font-size: .9rem;
       font-weight: 500;
@@ -262,7 +254,7 @@
       color: var(--verde);
       padding: .85rem 2rem;
       border: 1.5px solid var(--verde);
-      border-radius: 2px;
+      border-radius: var(--radio-btn);
       font-family: 'Inter', sans-serif;
       font-size: .9rem;
       font-weight: 500;
@@ -587,7 +579,7 @@
       color: var(--verde);
       padding: 1rem 2.2rem;
       border: none;
-      border-radius: 2px;
+      border-radius: var(--radio-btn);
       font-family: 'Inter', sans-serif;
       font-size: .9rem;
       font-weight: 600;
@@ -672,7 +664,7 @@
       font-family: 'Inter', sans-serif;
       font-weight: 500;
       padding: .15rem .5rem;
-      border-radius: 2px;
+      border-radius: var(--radio-btn);
       vertical-align: middle;
       margin-left: .5rem;
       letter-spacing: .04em;
@@ -681,14 +673,17 @@
     /* Grid de servicios: las 4 áreas en una fila */
     .servicios-grid {
       grid-template-columns: repeat(4, 1fr);
-      gap: 0;
+      gap: 1.2rem;
       background: transparent;
     }
     .servicio-card {
       border: 1px solid var(--beige-oscuro);
-      margin: -1px 0 0 -1px;
       padding: 2.4rem 1.8rem;
     }
+
+    /* Esquinas redondeadas en tarjetas y ventanas */
+    .servicio-card, .modalidad-card, .tarifa-card, .testi-card, .resena-vacia,
+    .modal, .modal-privacidad { border-radius: var(--radio); }
     .servicio-card h3 { margin-bottom: .3rem; }
     .servicio-lema {
       font-size: .74rem !important;
@@ -865,7 +860,7 @@
       background: var(--blanco);
       padding: .75rem 1rem;
       outline: none;
-      border-radius: 2px;
+      border-radius: var(--radio-btn);
       transition: border-color .2s;
       width: 100%;
       resize: vertical;
@@ -1006,7 +1001,7 @@
       background: var(--blanco);
       padding: .75rem 1rem;
       outline: none;
-      border-radius: 2px;
+      border-radius: var(--radio-btn);
       transition: border-color .2s;
       width: 100%;
     }
@@ -1043,7 +1038,7 @@
       font-size: .95rem;
       font-weight: 500;
       cursor: pointer;
-      border-radius: 2px;
+      border-radius: var(--radio-btn);
       transition: background .2s;
       margin-top: .4rem;
     }
@@ -1144,6 +1139,7 @@
         position: absolute;
         top: 100%; left: 0; right: 0;
         flex-direction: column;
+        align-items: stretch;
         gap: 1.1rem;
         padding: 1.4rem 5% 1.6rem;
         background: var(--crema);
@@ -1152,7 +1148,7 @@
       }
       .nav-links.abierto { display: flex; }
       .nav-links a { font-size: 1rem; }
-      .nav-cta, .nav-wa { display: flex; justify-content: center; padding: .8rem 1.2rem; }
+      .nav-cta, .nav-wa { justify-content: center; height: 2.9rem; }
     }
   </style>
 </head>
@@ -1168,9 +1164,9 @@
       <path style="stroke:var(--logo-nervio, #FAFAF7)" d="M22.5 17.5 30 10" fill="none" stroke-width=".9" stroke-linecap="round"/>
     </symbol>
   </svg>
-  <a href="#" class="logo" aria-label="Lua — Nutrición y Dietética, ir al inicio">
+  <a href="#" class="logo" aria-label="Lua — Dietista-TSD, ir al inicio">
     <svg class="logo-marca" aria-hidden="true"><use href="#logo-lua"/></svg>
-    <span class="logo-texto"><span class="logo-nombre">Lua</span><span class="logo-lema">Nutrición &amp; Dietética</span></span>
+    <span class="logo-texto"><span class="logo-nombre">Lua</span><span class="logo-lema">Dietista-TSD</span></span>
   </a>
   <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-links">
     <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
@@ -1540,7 +1536,7 @@
   <div>
     <div class="footer-logo">
       <svg class="logo-marca" aria-hidden="true"><use href="#logo-lua"/></svg>
-      <span class="logo-texto"><span class="logo-nombre">Lua</span><span class="logo-lema">Nutrición &amp; Dietética</span></span>
+      <span class="logo-texto"><span class="logo-nombre">Lua</span><span class="logo-lema">Dietista-TSD</span></span>
     </div>
     <p>Técnico superior en dietética especializada en nutrición clínica y deportiva. Consultas a domicilio y online.</p>
     <ul class="footer-contacto">
@@ -1561,7 +1557,7 @@
   </div>
 </footer>
 <div class="footer-bottom">
-  © 2026 Lua Nutrición & Dietética · Todos los derechos reservados ·
+  © 2026 Lua · Dietista-TSD · Todos los derechos reservados ·
   <a href="#" id="abrir-privacidad-footer" style="color:rgba(255,255,255,.4); text-decoration:underline;">Política de Privacidad</a>
 </div>
 
