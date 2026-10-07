@@ -98,31 +98,31 @@
     .footer-logo .logo-nombre { color: var(--blanco); }
     .footer-logo .logo-lema { color: rgba(255,255,255,.55); }
 
-    .nav-links { display: flex; align-items: center; gap: 2.4rem; list-style: none; }
+    .nav-links { display: flex; align-items: center; gap: .7rem; list-style: none; }
+    /* Todos los elementos del menú son botones con el mismo formato */
     .nav-links a {
-      text-decoration: none;
-      font-size: .88rem;
-      font-weight: 500;
-      color: var(--verde);
-      letter-spacing: .03em;
-      transition: color .2s;
-    }
-    .nav-links a:hover { color: var(--verde-claro); }
-
-    /* Los dos botones del menú comparten forma, color y altura para quedar alineados */
-    .nav-cta, .nav-wa {
       display: flex;
       align-items: center;
       gap: .45rem;
       height: 2.5rem;
-      padding: 0 1.2rem;
+      padding: 0 1.1rem;
       background: var(--verde);
-      color: var(--blanco) !important;
+      color: var(--blanco);
       border-radius: var(--radio-btn);
-      transition: background .2s !important;
+      text-decoration: none;
+      font-size: .88rem;
+      font-weight: 500;
+      letter-spacing: .03em;
+      white-space: nowrap;
+      transition: background .2s;
     }
-    .nav-cta:hover, .nav-wa:hover { background: var(--verde-claro); color: var(--blanco) !important; }
+    .nav-links a:hover { background: var(--verde-claro); }
     .nav-wa svg { flex-shrink: 0; }
+    /* En pantallas medianas se compactan para que los seis quepan en una línea */
+    @media (max-width: 1150px) {
+      .nav-links { gap: .4rem; }
+      .nav-links a { padding: 0 .7rem; font-size: .78rem; }
+    }
 
     /* Botón de menú (solo móvil) */
     .nav-toggle {
@@ -1147,8 +1147,7 @@
         box-shadow: 0 12px 24px rgba(0,0,0,.08);
       }
       .nav-links.abierto { display: flex; }
-      .nav-links a { font-size: 1rem; }
-      .nav-cta, .nav-wa { justify-content: center; height: 2.9rem; }
+      .nav-links a { font-size: 1rem; justify-content: center; height: 2.9rem; }
     }
   </style>
 </head>
